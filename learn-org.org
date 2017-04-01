@@ -15,3 +15,11 @@
    Important actors in this film are:
    - Elijah Wood :: He plays Frodo
    - Sean Astin :: He plays Sam, Frodo's friend
+** 2.5 footnote
+The Org homepage[fn:1] now looks a lot better than it used to
+[fn:1] The link is: http://orgmode.org
+** 2.6 tables
+   | Name |       Phone | Age |
+   |------+-------------+-----|
+   | Leo  | 13671834651 |  27 |
+   | Jane | 18801967893 |  28 |
