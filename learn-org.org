@@ -19,7 +19,7 @@
 The Org homepage[fn:1] now looks a lot better than it used to
 [fn:1] The link is: http://orgmode.org
 ** 2.6 tables
-   | Name |       Phone | Age |
-   |------+-------------+-----|
-   | Leo  | 13671834651 |  27 |
-   | Jane | 18801967893 |  28 |
+** 2.7 external link
+   [[http://www.gnu.org/software/emacs/][GNU Emacs]]
+** 2.8 file link
+   [[file:c:/Users/efuuxii/mis/GORDON-remove-client.txt][ORG]]
