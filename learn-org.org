@@ -22,4 +22,4 @@ The Org homepage[fn:1] now looks a lot better than it used to
 ** 2.7 external link
    [[http://www.gnu.org/software/emacs/][GNU Emacs]]
 ** 2.8 file link
-   [[file:c:/Users/efuuxii/mis/GORDON-remove-client.txt][ORG]]
+   [[https://github.com/FannyXL/org/blob/master/README.org][README]]
