@@ -1,0 +1,3 @@
+* 2 Document Structure
+** 2.1 Outlines
+** 2.2 Headlines
