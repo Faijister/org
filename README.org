@@ -1,1 +1,9 @@
-# org
+** 编码
+
+Unicode标准也描述了几种方法来将编码值序列转成字节序列。很明显，11万个字符无法用一个字节来编码，所以就有了多字节编码格式。最流行的两种Unicode编码格式应该是UTF-8和UTF-16。
+
+UTF-8设计之初就是要后向兼容已存在的ASCII编码、Unix系统以及C语言API（以null作为终止符的C字符串）。前128个编码值直接编码为单字节，其他字符用2到6的字节来编码，所有字节的最高比特设置为1，这样所有多字节的字符都不会被解释为ASCII字符，也不会存在null（0）。这样C语言写的程序和API就能够不改变或者做稍微调整就能处理UTF-8的字符串了。最重要的是，每一个ASCII码编码的文件自动可以转换为UTF-8编码的文件。
+
+UTF-16用2个字节来编码基本多文种平面（第零平面，Basic Multilingual Plane - BMP）中的字符，甚至原本的ASCII字符也用2个字节（16比特）。第零平面基本上涵盖了所有现代语言中实际使用到的所有字符。然而,UTF-16却不包括辅助（星体）平面中重要的例如[[http://www.fileformat.info/info/unicode/char/1f379/index.htm][TROPICAL DRINK]]或者[[http://www.fileformat.info/info/unicode/char/1F4A9/index.htm][PILE OF POO]]字符。如果你需要在UTF-16中用这些字符将出现问题：超过第零平面的字符不能被放在2个字节中。为了能容纳这些字符，UTF-16使用代理对（surrogate pairs）：这些字符会用一对2字节单元来编码。
+
+由于最后一点, UTF-16相对于UTF-8没有实用上的优势。它的[[http://www.utf8everywhere.org/][存在可能是一个巨大的错误]]。由于代理对的存在，你无法用恒定时间算法去查找，而且不能后向兼容也不能存储在以null结尾的字符串中。在Java和JavaScript中，它会导致一些字符串“长度”和字符、编码值甚至字节数不一至的窘境。最糟糕的是，它会导致[[https://speakerdeck.com/mathiasbynens/hacking-with-unicode?slide=114][严重的安全隐患]]。新的应用程序应该尽可能地避免这些问题。
