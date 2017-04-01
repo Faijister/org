@@ -1,0 +1,284 @@
+#+URL: http://nullprogram.com/blog/2014/06/13/
+#+TITLE: Emacs Unicode陷阱
+
+GNU Emacs的发布要比Unicode早7年。Emacs存在以后是在相对较晚的时候才加入了对Unicode的支持，这意味着在Emacs的历史中，不支持Unicode的时间段（16年）比支持Unicode的时间段（14年）还要长「注：文章发表于2014年」。尽管如此，Emacs对Unicode的支持十分出色，让人感觉似乎它一直都支持Unicode。
+# Emacs首次发布于1985年3月
+# Unicode首次发布于1992年6月
+然而,由于Unicode的目标是要涵盖所有已知的人类语言及其各式各样的细枝末节,结果自然会存在一些陷阱和问题。如果仅作为一个Emacs使用者的话，你可能不太会因此而受到影响。但如果作为一个扩展（插件）的开发者，你很可能会在处理Emacs的strings和buffers时遇到麻烦，这两个都是基于字符的数据结构。
+
+在这篇文章中，我将分享Elisp中Unicode带给我们的“惊喜”。我自己就曾遇到过好几个，事实上，写这篇文章还让我在自己的扩展程序中发现了好几个编码方面的小bug。这些缺陷都不是Emcas的错，它们只是自然语言的复杂性导致的结果。
+
+* Unicode和编码值（Code Point）
+
+首先，网上有非常好的资料来学习Unicode，我推荐从[[http://www.cl.cam.ac.uk/~mgk25/unicode.html][UTF-8 and Unicode FAQ for Unix/Linux]]开始。我没有理由在这里重复所有的信息，但是我会尝试快速地总结一下。Unicode将一个编码值（整数）映射到某个具体的字符，并带一个标准的名字。在写这篇文章的时候Unicode定义了超过11万个的字符。为了后向兼容性，前128个编码值映射到ASCII码。这个趋势也被其他的字符编码标准接受，比如Latin-1。
+
+在Emacs中，Unicode字符使用C-x 8 RET（insert-char）输入到buffer中。你既可以输入标准的字符名称（比如：π是“GREEK SMALL LETTER PI”），也可以直接输入十六进制的编码值。在Emacs之外的其他应用程序中如何输入是要看情况的，但是就我关心的应用来说C-S-u加上十六进制的编码值都是可以的。
+
+** 编码
+
+Unicode标准也描述了几种方法来将编码值序列转成字节序列。很明显，11万个字符无法用一个字节来编码，所以就有了多字节编码格式。最流行的两种Unicode编码格式应该是UTF-8和UTF-16。
+
+UTF-8设计之初就是要后向兼容已存在的ASCII编码、Unix系统以及C语言API（以null作为终止符的C字符串）。前128个编码值直接编码为单字节，其他字符用2到6的字节来编码，所有字节的最高比特设置为1，这样所有多字节的字符都不会被解释为ASCII字符，也不会存在null（0）。这样C语言写的程序和API就能够不改变或者做稍微调整就能处理UTF-8的字符串了。最重要的是，每一个ASCII码编码的文件自动可以转换为UTF-8编码的文件。
+
+UTF-16用2个字节来编码基本多文种平面（第零平面，Basic Multilingual Plane - BMP）中的字符，甚至原本的ASCII字符也用2个字节（16比特）。第零平面基本上涵盖了所有现代语言中实际使用到的所有字符。然而,UTF-16却不包括辅助（星体）平面中重要的例如[[http://www.fileformat.info/info/unicode/char/1f379/index.htm][TROPICAL DRINK]]或者[[http://www.fileformat.info/info/unicode/char/1F4A9/index.htm][PILE OF POO]]字符。如果你需要在UTF-16中用这些字符将出现问题：超过第零平面的字符不能被放在2个字节中。为了能容纳这些字符，UTF-16使用代理对（surrogate pairs）：这些字符会用一对2字节单元来编码。
+
+由于最后一点, UTF-16相对于UTF-8没有实用上的优势。它的[[http://www.utf8everywhere.org/][存在可能是一个巨大的错误]]。由于代理对的存在，你无法用恒定时间算法去查找，而且不能后向兼容也不能存储在以null结尾的字符串中。在Java和JavaScript中，它会导致一些字符串“长度”和字符、编码值甚至字节数不一至的窘境。最糟糕的是，它会导致[[https://speakerdeck.com/mathiasbynens/hacking-with-unicode?slide=114][严重的安全隐患]]。新的应用程序应该尽可能地避免这些问题。
+
+* Emacs和UTF-8
+
+*在Emacs内部所有的文本都用UTF-8格式存储*. This was an excellent choice! When
+text leaves Emacs, such as writing to a file or to a process, Emacs
+automatically converts it to the coding system configured for that particular
+file or process. When it accepts text from a file or process, it either
+converts it to UTF-8 or preserves it as raw bytes.
+
+There are two modes for this in Emacs: unibyte and multibyte. Unibyte strings/
+buffers are just raw bytes. They have constant access O(1) time but can only
+hold single-byte values. The [[http://nullprogram.com/blog/2014/01/04/][byte-code compiler outputs unibyte strings]].
+
+Multibyte strings/buffers hold UTF-8 encoded code points. Character access is
+O(n) because the string/buffer has to be scanned to count characters.
+
+The actual encoding is rarely relevant because there’s little way (and need)
+to access it directly. Emacs automatically converts text as needed when it
+leaves Emacs and arrives in Emacs, so there’s no need to know the internal
+encoding. If you really want to see it anyway, you can use string-as-unibyte
+to get a copy of a string with the exact same bytes, but as a byte-string.
+
+#+BEGIN_SRC emacs-lisp
+  (string-as-unibyte "π")
+  ;; => "\317\200"
+#+END_SRC
+
+This can be reversed with string-as-multibyte), to change a unibyte string
+holding UTF-8 encoded text back into a multibyte string. Note that these
+functions are different than string-to-unibyte and string-to-multibyte, which
+will attempt a conversion rather than preserving the raw bytes.
+
+The length and buffer-size functions always count characters in multibyte and
+bytes in unibyte. Being UTF-8, there are no surrogate pairs to worry about
+here. The string-bytes and position-bytes functions return byte information
+for both multibyte and unibyte.
+
+To specify a Unicode character in a string literal without using the character
+directly, use \uXXXX. The XXXX is the hexadecimal code point for the character
+and is always 4 digits long. For characters outside the BMP, which won’t fit
+in four digits, use a capital U with eight digits: \UXXXXXXXX.
+
+#+BEGIN_SRC emacs-lisp
+  "\u03C0"
+  ;; => "π"
+
+  "\U0001F4A9"
+  ;; => "💩"  (PILE OF POO)
+#+END_SRC
+
+Finally, Emacs extends Unicode with 256 additional “characters” representing
+raw bytes. This allows raw bytes to be embedded distinctly within UTF-8
+sequences. For example, it’s used to distinguish the code point U+0041 from
+the raw byte #x41. As far as I can tell, this isn’t used very often.
+
+* Combining Characters
+
+Some Unicode characters are defined as combining characters. These characters
+modify the non-combining character that appears before it, typically with
+accents or diacritical marks.
+
+For example, the word “naïve” can be written as six characters as "nai\
+u0308ve". The fourth character, U+0308 (COMBINING DIAERESIS), is a combining
+character that changes the “i” (U+0069 LATIN SMALL LETTER I) into an umlaut
+character.
+
+The most commonly accented characters have a code of their own. These are
+called precomposed characters. This includes ï (U+00EF LATIN SMALL LETTER I
+WITH DIAERESIS). This means “naïve” can also be written as five characters as
+"na\u00EFve".
+
+** Normalization
+
+So what happens when comparing two different representations of the same text?
+They’re not equal.
+
+#+BEGIN_SRC emacs-lisp
+  (string= "nai\u0308ve" "na\u00EFve")
+  ;; => nil
+#+END_SRC
+
+To deal with situations like this, the Unicode standard defines four different
+kinds of normalization. The two most important ones are NFC (composition) and
+NFD (decomposition). The former uses precomposed characters whenever possible
+and the latter breaks them apart. The functions ucs-normalize-NFC-string and
+ucs-normalize-NFD-string perform this operation.
+
+Pitfall #1: Proper string comparison requires normalization. It doesn’t matter
+which normalization you use (though NFD should be slightly faster), you just
+need to use it consistently. Unfortunately this can get tricky when using
+equal to compare complex data structures with multiple strings.
+
+#+BEGIN_SRC emacs-lisp
+  (string= (ucs-normalize-NFD-string "nai\u0308ve")
+           (ucs-normalize-NFD-string "na\u00EFve"))
+  ;; => t
+#+END_SRC
+
+Emacs itself fails to do this. It doesn’t normalize strings before interning
+them, which is probably a mistake. This means you can have differently defined
+variables and functions with the same canonical name.
+
+#+BEGIN_SRC emacs-lisp
+  (eq (intern "nai\u0308ve")
+      (intern "na\u00EFve"))
+  ;; => nil
+
+  (defun print-résumé ()
+    "NFC-normalized form."
+    (print "I'm going to sabotage your team."))
+
+  (defun print-résumé ()
+    "NFD-normalized form."
+    (print "I'd be a great asset to your team."))
+
+  (print-résumé)
+  ;; => "I'm going to sabotage your team."
+#+END_SRC
+
+** String Width
+
+There are three ways to quantify multibyte text. These are often the same
+value, but in some circumstances they can each be different.
+
+  * length: number of characters, including combining characters
+  * bytes: number of bytes in its UTF-8 encoding
+  * width: number of columns it would occupy in the current buffer
+
+Most of the time, one character is one column (a width of one). Some
+characters, like combining characters, consume no columns. Many Asian
+characters consume two columns (U+4000, 䀀). Tabs consume tab-width columns,
+usually 8.
+
+Generally, a string should have the same width regardless of which whether
+it’s NFD or NFC. However, due to bugs and incomplete Unicode support, this
+isn’t strictly true. For example, some combining characters, such as U+20DD ⃝,
+won’t combine correctly in Emacs nor in other applications.
+
+Pitfall #2: Always measure text by width, not length, when laying out a buffer
+. Width is measured with the string-width function. This comes up when laying
+out tables in a buffer. The number of characters that fit in a column depends
+on what those characters are.
+
+Fortunately I accidentally got this right in [[http://nullprogram.com/blog/2013/09/04/][Elfeed]] because I used the format
+function for layout. The %s directive operates on width, as would be expected.
+However, this has the side effect that the output of may format change
+depending on the current buffer! Pitfall #3: Be mindful of the current buffer
+when using the format function.
+
+#+BEGIN_SRC emacs-lisp
+  (let ((tab-width 4))
+    (length (format "%.6s" "\t")))
+  ;; => 1
+
+  (let ((tab-width 8))
+    (length (format "%.6s" "\t")))
+  ;; => 0
+#+END_SRC
+
+** String Reversal
+
+Say you want to reverse a multibyte string. Simple, right?
+
+#+BEGIN_SRC emacs-lisp
+  (defun reverse-string (string)
+    (concat (reverse (string-to-list string))))
+
+  (reverse-string "abc")
+  ;; => "cba"
+#+END_SRC
+
+Wrong! The combining characters will get flipped around to the wrong side of
+the character they’re meant to modify.
+
+#+BEGIN_SRC emacs-lisp
+  (reverse-string "nai\u0308ve")
+  ;; => "ev̈ian"
+#+END_SRC
+
+Pitfall #4: [[https://github.com/mathiasbynens/esrever][Reversing Unicode strings is non-trivial]]. The [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] page is
+full of incorrect examples, and [[http://nullprogram.com/blog/2012/11/15/][I’m personally guilty]] of this, too. The other
+day I [[https://github.com/magnars/s.el/pull/58][submitted a patch to s.el]] to correct its s-reverse function for Unicode.
+If it’s accepted, you should never need to worry about this.
+
+** Regular Expressions
+
+Regular expressions operate on code points. This means combining characters
+are counted separately and the match may change depending on how characters
+are composed. To avoid this, you might want to consider NFC normalization
+before performing some kinds of regular expressions.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Like string= from before:
+  (string-match-p  "na\u00EFve" "nai\u0308ve")
+  ;; => nil
+
+  ;; The . only matches part of the composition
+  (string-match-p "na.ve" "nai\u0308ve")
+  ;; => nil
+#+END_SRC
+
+Pitfall #5: Be mindful of combining characters when using regular expressions.
+Prefer NFC normalization when dealing with regular expressions.
+
+Another potential problem is ranges, though this is quite uncommon. Ranges of
+characters can be expressed in inside brackets, e.g. [a-zA-Z]. If the range
+begins or ends with a decomposed combining character you won’t get the proper
+range because its parts are considered separately by the regular expression
+engine.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar match-weird "[\u00E0-\u00F6]+")
+
+  (string-match-p match-weird "áâãäå")
+  ;; => 0  (successful match)
+
+  (string-match-p (ucs-normalize-NFD-string match-weird) "áâãäå")
+  ;; => nil
+#+END_SRC
+
+It’s especially important to keep all of this in mind when sanitizing
+untrusted input, such as when using Emacs as a web server. An attacker might
+use a denormalized or strange grapheme cluster to bypass a filter.
+
+* Interacting with the World
+
+Here’s a mistake I’ve made twice now. Emacs uses UTF-8 internally, regardless
+of whatever encoding the original text came in. 
+Pitfall #6: *When working with bytes of text, the counts may be different than the original source of the text*.
+
+For example, HTTP/1.1 introduced persistent connections. Before this, a client
+connects to a server and asks for content. The server sends the content and
+then closes the connection to signal the end of the data. In HTTP/1.1, when
+Connection: close isn’t specified, the server will instead send a
+Content-Length header indicating the length of the content in bytes. The
+connection can then be re-used for more requests, or, more importantly,
+pipelining requests.
+
+The main problem is that HTTP headers usually have a different encoding than
+the content body. Emacs is not prepared to handle multiple encodings from a
+single source, so the only correct way to talk HTTP with a network process is
+raw. My mistake was allowing Emacs to do the UTF-8 conversion, then measuring
+the length of the content in its UTF-8 encoding. This just happens to work
+fine about 99.9% of the time since clients tend to speak UTF-8, or something
+like it, anyway, but it’s not correct.
+
+* Further Reading
+
+A lot of this investigation was inspired by JavaScript’s and other languages’
+Unicode shortcomings.
+
+  * [[http://www.cl.cam.ac.uk/~mgk25/unicode.html][UTF-8 and Unicode FAQ for Unix/Linux]]
+  * [[https://speakerdeck.com/mathiasbynens/hacking-with-unicode][Hacking with Unicode]]
+  * [[https://github.com/mathiasbynens/jsesc][jsesc]]
+  * [[http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html#unicode][java.lang.Character Unicode Character Representations]]
+  * [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Strings-and-Characters.html][GNU Emacs Lisp Reference Manual: Strings and Characters]]
+
+Comparatively, Emacs Lisp has really great Unicode support. This isn’t too
+surprising considering that it’s primary purpose is for manipulating text.
