@@ -1,0 +1,53 @@
+* Emacs和UTF-8
+
+*在Emacs内部所有的文本都用UTF-8格式存储*. This was an excellent choice! When
+text leaves Emacs, such as writing to a file or to a process, Emacs
+automatically converts it to the coding system configured for that particular
+file or process. When it accepts text from a file or process, it either
+converts it to UTF-8 or preserves it as raw bytes.
+
+There are two modes for this in Emacs: unibyte and multibyte. Unibyte strings/
+buffers are just raw bytes. They have constant access O(1) time but can only
+hold single-byte values. The [[http://nullprogram.com/blog/2014/01/04/][byte-code compiler outputs unibyte strings]].
+
+Multibyte strings/buffers hold UTF-8 encoded code points. Character access is
+O(n) because the string/buffer has to be scanned to count characters.
+
+The actual encoding is rarely relevant because there’s little way (and need)
+to access it directly. Emacs automatically converts text as needed when it
+leaves Emacs and arrives in Emacs, so there’s no need to know the internal
+encoding. If you really want to see it anyway, you can use string-as-unibyte
+to get a copy of a string with the exact same bytes, but as a byte-string.
+
+#+BEGIN_SRC emacs-lisp
+  (string-as-unibyte "π")
+  ;; => "\317\200"
+#+END_SRC
+
+This can be reversed with string-as-multibyte), to change a unibyte string
+holding UTF-8 encoded text back into a multibyte string. Note that these
+functions are different than string-to-unibyte and string-to-multibyte, which
+will attempt a conversion rather than preserving the raw bytes.
+
+The length and buffer-size functions always count characters in multibyte and
+bytes in unibyte. Being UTF-8, there are no surrogate pairs to worry about
+here. The string-bytes and position-bytes functions return byte information
+for both multibyte and unibyte.
+
+To specify a Unicode character in a string literal without using the character
+directly, use \uXXXX. The XXXX is the hexadecimal code point for the character
+and is always 4 digits long. For characters outside the BMP, which won’t fit
+in four digits, use a capital U with eight digits: \UXXXXXXXX.
+
+#+BEGIN_SRC emacs-lisp
+  "\u03C0"
+  ;; => "π"
+
+  "\U0001F4A9"
+  ;; => "💩"  (PILE OF POO)
+#+END_SRC
+
+Finally, Emacs extends Unicode with 256 additional “characters” representing
+raw bytes. This allows raw bytes to be embedded distinctly within UTF-8
+sequences. For example, it’s used to distinguish the code point U+0041 from
+the raw byte #x41. As far as I can tell, this isn’t used very often.
