@@ -190,32 +190,16 @@ length和buffer-size函数总是使用multibyte计算字符以及使用unibyte�
 #+END_SRC
 
 在审查一些不受信任的输入时将所有这些牢记于心是非常重要的，比如使用Emacs作为Web server，攻击者可能使用非归一化或奇怪的字符串来绕开过滤器。
-* Interacting with the World
+* 与世界交互
 
-Here’s a mistake I’ve made twice now. Emacs uses UTF-8 internally, regardless
-of whatever encoding the original text came in. 
-Pitfall #6: *When working with bytes of text, the counts may be different than the original source of the text*.
+有个错误我现在犯过两次了。Emacs内部使用UTF-8，无论输入文本原始是什么编码。
 
-For example, HTTP/1.1 introduced persistent connections. Before this, a client
-connects to a server and asks for content. The server sends the content and
-then closes the connection to signal the end of the data. In HTTP/1.1, when
-Connection: close isn’t specified, the server will instead send a
-Content-Length header indicating the length of the content in bytes. The
-connection can then be re-used for more requests, or, more importantly,
-pipelining requests.
+*陷阱提示#6：务必注意计算文本字节数可能和原来的不一样。*
 
-The main problem is that HTTP headers usually have a different encoding than
-the content body. Emacs is not prepared to handle multiple encodings from a
-single source, so the only correct way to talk HTTP with a network process is
-raw. My mistake was allowing Emacs to do the UTF-8 conversion, then measuring
-the length of the content in its UTF-8 encoding. This just happens to work
-fine about 99.9% of the time since clients tend to speak UTF-8, or something
-like it, anyway, but it’s not correct.
+例如，HTTP/1.1提出了长连接（persistent connections）。在此之前，客户端连到服务端然后请求内容，一旦服务端回内容给客户端后就会发送一个信号来结束连接。在HTTP/1.1中，服务端不发送close而是发送包含Content-Length的头来指示内容的字节长度。这样有多个请求，或者，更重要管道请求时，连接可以被复用。HTTP头的主要问题在于很多时候消息体编码是不同的。Emacs不能由一个单独源来处理多种编码，所以唯一的方式是用原始的字节来与网络进程交互HTTP协议请求。我的错误在于允许Emacs进行UTF-8转换，然后以UTF-8的编码格式计算内容的长度。这碰巧在99.9%的时候能工作因为大多客户端使用UTF-8或其他类似的，但无论如何，这是不完全正确的。
+* 进一步阅读
 
-* Further Reading
-
-A lot of this investigation was inspired by JavaScript’s and other languages’
-Unicode shortcomings.
+有很多研究是受JavaScript和其他语言的Unicode缺点而启发的。
 
   * [[http://www.cl.cam.ac.uk/~mgk25/unicode.html][UTF-8 and Unicode FAQ for Unix/Linux]]
   * [[https://speakerdeck.com/mathiasbynens/hacking-with-unicode][Hacking with Unicode]]
@@ -223,5 +207,4 @@ Unicode shortcomings.
   * [[http://docs.oracle.com/javase/7/docs/api/java/lang/Character.html#unicode][java.lang.Character Unicode Character Representations]]
   * [[http://www.gnu.org/software/emacs/manual/html_node/elisp/Strings-and-Characters.html][GNU Emacs Lisp Reference Manual: Strings and Characters]]
 
-Comparatively, Emacs Lisp has really great Unicode support. This isn’t too
-surprising considering that it’s primary purpose is for manipulating text.
+相比之下，Emacs Lisp有出色的Unicode支持。这也不会让人感到太意外，比较Emacs的最初目的就是进行文本处理。
