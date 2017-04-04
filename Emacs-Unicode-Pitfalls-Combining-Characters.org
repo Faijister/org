@@ -19,7 +19,7 @@ WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"�
 
 为了应对这种情况，Unicode标准定义了4种不同的归一化。其中最重要的两种是NFC（组合）和NFD（分解）。前者尽可能地使用预组合字符而后者尽可能地将其拆分。ucs-normalize-NFC-string和ucs-normalize-NFD-string函数用来执行这个操作。
 
-*陷阱提示#1: 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，但你比较复杂的多字符串时可能得到奇怪的结果。
+*陷阱提示#1： 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，但你比较复杂的多字符串时可能得到奇怪的结果。
 
 #+BEGIN_SRC emacs-lisp
   (string= (ucs-normalize-NFD-string "nai\u0308ve")
@@ -58,15 +58,9 @@ WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"�
 
 通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如U+20DD, ⃝  在Emacs中或者其他应用程序中无法正确地组合。
 
-*陷阱提示#2: 当展示一个buffer时，务必使用宽度而不是长度来计算文本。*  Width is measured with the string-width function. This comes up when laying
-out tables in a buffer. The number of characters that fit in a column depends
-on what those characters are.
+*陷阱提示#2： 当展示一个buffer时，务必使用宽度而不是长度来计算文本。*  宽度通过string-width函数来计算，当展示buffer中的表格的时候会被调用。每列中适当的字符个数要根据是什么字符而定。
 
-Fortunately I accidentally got this right in [[http://nullprogram.com/blog/2013/09/04/][Elfeed]] because I used the format
-function for layout. The %s directive operates on width, as would be expected.
-However, this has the side effect that the output of may format change
-depending on the current buffer! Pitfall #3: Be mindful of the current buffer
-when using the format function.
+幸运的是，有次碰巧通过[[http://nullprogram.com/blog/2013/09/04/][Elfeed]]得到了正确结果，因为我使用了format函数来展示。如希望地那样，%s指示符用来操作宽度。然而有个副作用：很多格式化的输出会根据当前buffer而改变！ *陷阱提示#3： 使用format函数时务必注意当前buffer。*
 
 #+BEGIN_SRC emacs-lisp
   (let ((tab-width 4))
