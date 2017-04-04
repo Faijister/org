@@ -56,7 +56,7 @@ WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"�
 
 大多数时候，一个字符就是一列（一个字符的宽度）。一些字符，比如组合字符，不占用宽度。一些亚洲国家字符占两列，比如(U+4000, 䀀)。Tab占用tab-width列，通常是8。
 
-通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如 /U+20DD  ⃝,  / 在Emacs中或者其他应用程序中无法正确地组合。
+通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如U+20DD   ⃝,  在Emacs中或者其他应用程序中无法正确地组合。
 
 *陷阱提示#2: 当展示一个buffer时，务必使用宽度而不是长度来计算文本。*  Width is measured with the string-width function. This comes up when laying
 out tables in a buffer. The number of characters that fit in a column depends
