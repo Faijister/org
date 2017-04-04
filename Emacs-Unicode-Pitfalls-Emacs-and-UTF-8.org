@@ -1,17 +1,1 @@
-* Emacs和UTF-8                                                                                                                                                            
-                                                                                                                                                                          
-*在Emacs内部所有的文本都用UTF-8格式存储* 这是个非常明智的选择！当Emacs输出文本，比如写到文件或者传到另一个进程，Emacs会自动根据文件或进程所配置的编码系统来对文本进行编码\
-。当读取一个文件或者进程的文本时，Emacs要么它将其转换为UTF-8编码格式，要么保持原始字节。                                                                                  
-                                                                                                                                                                          
-关于这点在Emacs中有2种模式：单字节和多字节。单字节strings/buffers就是原始字节，它们满足常量时间O(1)访问但是进能保存单字节值[[http://nullprogram.com/blog/2014/01/04/][byt\
-e-code compiler outputs unibyte strings]]。                                                                                                                               
-                                                                                                                                                                          
-多字节strings/buffers保存UTF-8编码的编码值。字符访问时间复杂读是O(n)因为需要遍历一边string/buffer来计算字符个数。                                                         
-                                                                                                                                                                          
-实际的编码很少关心，因为没有太多方法（和需要）来直接访问。当文本输入或输出时，Emacs会自动将文本编码格式按需进行转换，所以不需要关心内部的编码。如果你/确实/想知道，你可以\
-用string-as-unibyte来得到以字节表示的string。                                                                                                                             
-                                                                                                                                                                          
-#+BEGIN_SRC emacs-lisp                                                                                                                                                    
-  (string-as-unibyte "π")                                                                                                                                                 
-  ;; => "\317\200"                                                                                                                                                        
-#+END_SRC                   
+/确实/
