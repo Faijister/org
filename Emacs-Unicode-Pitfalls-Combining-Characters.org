@@ -1,0 +1,144 @@
+* 组合字符（Combining Characters）
+
+一些Unicode字符定义为组合字符。这些字符的作用是修改出现在它之前的非组合字符，典型代表是加重或者变音标记。
+
+举个例子，单词“naïve”可以写作这6个字符"nai\u0308ve"。第4个字符U+0308（组合分音符）就是一个组合字符，用来将“i” (U+0069 LATIN SMALL LETTER I)变成一个变音字符。
+
+通常的加重字符有它自己的编码值，它们叫做预组合字符（precomposed characters），包括ï (U+00EF LATIN SMALL LETTER I
+WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"。
+
+** 归一化（Normalization）
+
+所以比较两个使用不同的表示的字符会怎样？
+他们不相等。
+
+#+BEGIN_SRC emacs-lisp
+  (string= "nai\u0308ve" "na\u00EFve")
+  ;; => nil
+#+END_SRC
+
+为了应对这种情况，Unicode标准定义了4种不同的归一化。其中最重要的两种是NFC（组合）和NFD（分解）。前者尽可能地使用预组合字符而后者尽可能地将其拆分。ucs-normalize-NFC-string和ucs-normalize-NFD-string函数用来执行这个操作。
+
+*陷阱提示#1: 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，但你比较复杂的多字符串时可能得到奇怪的结果。
+
+#+BEGIN_SRC emacs-lisp
+  (string= (ucs-normalize-NFD-string "nai\u0308ve")
+           (ucs-normalize-NFD-string "na\u00EFve"))
+  ;; => t
+#+END_SRC
+
+用Emacs自带的函数比较会失败，它在使用intern函数前不会做归一化，也许这是个错误。这意味着你可以使用相同的名称（intern转换的canonical symbol）来定义不同的变量和函数。
+
+#+BEGIN_SRC emacs-lisp
+  (eq (intern "nai\u0308ve")
+      (intern "na\u00EFve"))
+  ;; => nil
+
+  (defun print-résumé ()
+    "NFC-normalized form."
+    (print "I'm going to sabotage your team."))
+
+  (defun print-résumé ()
+    "NFD-normalized form."
+    (print "I'd be a great asset to your team."))
+
+  (print-résumé)
+  ;; => "I'm going to sabotage your team."
+#+END_SRC
+
+** 字符串宽度
+
+有三种方法可以用来计算多字节文本的数量，通常它们的值相同，但是在有些情况下它们却各不不同。
+
+  * 长度： 字符个数，包括组合字符
+  * 字节数： 用UTF-8编码的字节数
+  * 宽度： 占当前缓冲区的列数
+
+大多数时候，一个字符就是一列（一个字符的宽度）。一些字符，比如组合字符，不占用宽度。一些亚洲国家字符占两列，比如(U+4000, 䀀)。Tab占用tab-width列，通常是8。
+
+通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如U+20DD ⃝, 在Emacs中或者其他应用程序中无法正确地组合。
+
+*陷阱提示#2: 当展示一个buffer时，务必使用宽度而不是长度来计算文本。*  Width is measured with the string-width function. This comes up when laying
+out tables in a buffer. The number of characters that fit in a column depends
+on what those characters are.
+
+Fortunately I accidentally got this right in [[http://nullprogram.com/blog/2013/09/04/][Elfeed]] because I used the format
+function for layout. The %s directive operates on width, as would be expected.
+However, this has the side effect that the output of may format change
+depending on the current buffer! Pitfall #3: Be mindful of the current buffer
+when using the format function.
+
+#+BEGIN_SRC emacs-lisp
+  (let ((tab-width 4))
+    (length (format "%.6s" "\t")))
+  ;; => 1
+
+  (let ((tab-width 8))
+    (length (format "%.6s" "\t")))
+  ;; => 0
+#+END_SRC
+
+** String Reversal
+
+Say you want to reverse a multibyte string. Simple, right?
+
+#+BEGIN_SRC emacs-lisp
+  (defun reverse-string (string)
+    (concat (reverse (string-to-list string))))
+
+  (reverse-string "abc")
+  ;; => "cba"
+#+END_SRC
+
+Wrong! The combining characters will get flipped around to the wrong side of
+the character they’re meant to modify.
+
+#+BEGIN_SRC emacs-lisp
+  (reverse-string "nai\u0308ve")
+  ;; => "ev̈ian"
+#+END_SRC
+
+Pitfall #4: [[https://github.com/mathiasbynens/esrever][Reversing Unicode strings is non-trivial]]. The [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] page is
+full of incorrect examples, and [[http://nullprogram.com/blog/2012/11/15/][I’m personally guilty]] of this, too. The other
+day I [[https://github.com/magnars/s.el/pull/58][submitted a patch to s.el]] to correct its s-reverse function for Unicode.
+If it’s accepted, you should never need to worry about this.
+
+** Regular Expressions
+
+Regular expressions operate on code points. This means combining characters
+are counted separately and the match may change depending on how characters
+are composed. To avoid this, you might want to consider NFC normalization
+before performing some kinds of regular expressions.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Like string= from before:
+  (string-match-p  "na\u00EFve" "nai\u0308ve")
+  ;; => nil
+
+  ;; The . only matches part of the composition
+  (string-match-p "na.ve" "nai\u0308ve")
+  ;; => nil
+#+END_SRC
+
+Pitfall #5: Be mindful of combining characters when using regular expressions.
+Prefer NFC normalization when dealing with regular expressions.
+
+Another potential problem is ranges, though this is quite uncommon. Ranges of
+characters can be expressed in inside brackets, e.g. [a-zA-Z]. If the range
+begins or ends with a decomposed combining character you won’t get the proper
+range because its parts are considered separately by the regular expression
+engine.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar match-weird "[\u00E0-\u00F6]+")
+
+  (string-match-p match-weird "áâãäå")
+  ;; => 0  (successful match)
+
+  (string-match-p (ucs-normalize-NFD-string match-weird) "áâãäå")
+  ;; => nil
+#+END_SRC
+
+It’s especially important to keep all of this in mind when sanitizing
+untrusted input, such as when using Emacs as a web server. An attacker might
+use a denormalized or strange grapheme cluster to bypass a filter.
