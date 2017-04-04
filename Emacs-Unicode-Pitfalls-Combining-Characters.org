@@ -1,25 +1,25 @@
 * 组合字符（Combining Characters）
 
-一些Unicode字符定义为组合字符。这些字符的作用是修改出现在它之前的非组合字符，典型代表是加重或者变音标记。
+有些Unicode字符定义为组合字符。这些字符的作用是修改它前面的非组合字符，典型作用是加重或者变音标记。
 
 举个例子，单词“naïve”可以写作这6个字符"nai\u0308ve"。第4个字符U+0308（组合分音符）就是一个组合字符，用来将“i” (U+0069 LATIN SMALL LETTER I)变成一个变音字符。
 
-通常的加重字符有它自己的编码值，它们叫做预组合字符（precomposed characters），包括ï (U+00EF LATIN SMALL LETTER I
-WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"。
+通常的加重字符也有它自己的编码值，叫做预组合字符（precomposed characters），包括ï (U+00EF LATIN SMALL LETTER I WITH DIAERESIS)。所以“naïve”也可以写作这5个字符"na\u00EFve"。
 
 ** 归一化（Normalization）
 
-所以比较两个使用不同的表示的字符会怎样？
-他们不相等。
+那么比较两个两个不同表示的字符会结果如何呢？
+
+不相等。
 
 #+BEGIN_SRC emacs-lisp
   (string= "nai\u0308ve" "na\u00EFve")
   ;; => nil
 #+END_SRC
 
-为了应对这种情况，Unicode标准定义了4种不同的归一化。其中最重要的两种是NFC（组合）和NFD（分解）。前者尽可能地使用预组合字符而后者尽可能地将其拆分。ucs-normalize-NFC-string和ucs-normalize-NFD-string函数用来执行这个操作。
+为了应对这种情况，Unicode标准定义了4种不同的归一化。其中最重要的两种是NFC（组合）和NFD（分解）。前者尽可能地使用预组合字符而后者尽可能地将其拆分。ucs-normalize-NFC-string和ucs-normalize-NFD-string函数用来实现这两个操作。
 
-*陷阱提示#1： 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，但你比较复杂的多字符串时可能得到奇怪的结果。
+*陷阱提示#1： 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，当你比较复杂的多字符串时依然可能产生奇怪的结果。
 
 #+BEGIN_SRC emacs-lisp
   (string= (ucs-normalize-NFD-string "nai\u0308ve")
@@ -54,7 +54,7 @@ WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"�
   * 字节数： 用UTF-8编码的字节数
   * 宽度： 占当前缓冲区的列数
 
-大多数时候，一个字符就是一列（一个字符的宽度）。一些字符，比如组合字符，不占用宽度。一些亚洲国家字符占两列，比如(U+4000, 䀀)。Tab占用tab-width列，通常是8。
+大多数时候，一个字符就是一列（一个字符的宽度）。有一些字符，比如组合字符，不占用宽度。一些亚洲国家字符占两列，比如(U+4000, 䀀)。Tab占用tab-width列，通常是8。
 
 通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如U+20DD, ⃝  在Emacs中或者其他应用程序中无法正确地组合。
 
@@ -72,9 +72,9 @@ WITH DIAERESIS)。这说明“naïve”也可以写作这5个字符"na\u00EFve"�
   ;; => 0
 #+END_SRC
 
-** String Reversal
+** 字符串反转
 
-Say you want to reverse a multibyte string. Simple, right?
+加入要将一个多字节字符串反转。很简单，对吗？
 
 #+BEGIN_SRC emacs-lisp
   (defun reverse-string (string)
@@ -84,44 +84,43 @@ Say you want to reverse a multibyte string. Simple, right?
   ;; => "cba"
 #+END_SRC
 
-Wrong! The combining characters will get flipped around to the wrong side of
-the character they’re meant to modify.
+错了！组合字符经反转会对之前它右边的字符进行修改而产生错误。
 
 #+BEGIN_SRC emacs-lisp
   (reverse-string "nai\u0308ve")
   ;; => "ev̈ian"
 #+END_SRC
 
-Pitfall #4: [[https://github.com/mathiasbynens/esrever][Reversing Unicode strings is non-trivial]]. The [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] page is
-full of incorrect examples, and [[http://nullprogram.com/blog/2012/11/15/][I’m personally guilty]] of this, too. The other
-day I [[https://github.com/magnars/s.el/pull/58][submitted a patch to s.el]] to correct its s-reverse function for Unicode.
-If it’s accepted, you should never need to worry about this.
+*Pitfall #4: [[https://github.com/mathiasbynens/esrever][Unicode字符串反转务必小心]]。* [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] 页面罗列了许多错误的案例， [[http://nullprogram.com/blog/2012/11/15/][我个人也出过错]] 。之后我[[https://github.com/magnars/s.el/pull/58][提交了一个s.el的补丁]] 来修正Unicode的s-reverse函数。
+如果这个能被接受，你就不用再担心这个了。
 
-** Regular Expressions
+** 正则表达式
 
-Regular expressions operate on code points. This means combining characters
-are counted separately and the match may change depending on how characters
-are composed. To avoid this, you might want to consider NFC normalization
-before performing some kinds of regular expressions.
+正则表达式基于编码值。组合字符单独计算，匹配会根据字符如何组合可能不不同。为了避免这种情况，你需要在做某些正则匹配之前进行NFC归一化。
 
 #+BEGIN_SRC emacs-lisp
   ;; Like string= from before:
   (string-match-p  "na\u00EFve" "nai\u0308ve")
   ;; => nil
 
+  ;; Use NFC normilization
+  (string-match-p (ucs-normalize-NFC-string "na\u00EFve") 
+                  (ucs-normalize-NFC-string "nai\u0308ve"))
+  ;; => 0
+
   ;; The . only matches part of the composition
   (string-match-p "na.ve" "nai\u0308ve")
   ;; => nil
+  
+  ;; .. matches i and the composition character
+  (string-match-p "na..ve" "nai\u0308ve")
+  ;; => 0
+
 #+END_SRC
 
-Pitfall #5: Be mindful of combining characters when using regular expressions.
-Prefer NFC normalization when dealing with regular expressions.
+*陷阱提示#5： 使用正则表达式时务必注意组合字符，且优先选择NFC归一化。*
 
-Another potential problem is ranges, though this is quite uncommon. Ranges of
-characters can be expressed in inside brackets, e.g. [a-zA-Z]. If the range
-begins or ends with a decomposed combining character you won’t get the proper
-range because its parts are considered separately by the regular expression
-engine.
+另一个潜在的问题是范围，尽管这不太常见。字符的范围可以用中括号来表达，比如[a-zA-Z]。如果范围以分解的组合字符开始或结束，将得不到正确的结果，因为组合字符部分会被正则表达式引擎单独处理。
 
 #+BEGIN_SRC emacs-lisp
   (defvar match-weird "[\u00E0-\u00F6]+")
@@ -133,6 +132,4 @@ engine.
   ;; => nil
 #+END_SRC
 
-It’s especially important to keep all of this in mind when sanitizing
-untrusted input, such as when using Emacs as a web server. An attacker might
-use a denormalized or strange grapheme cluster to bypass a filter.
+在审查一些不受信任的输入时将所有这些牢记于心是非常重要的，比如使用Emacs作为Web server，攻击者可能使用非归一化或奇怪的字符串来绕开过滤器。

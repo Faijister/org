@@ -55,42 +55,28 @@ length和buffer-size函数总是使用multibyte计算字符以及使用unibyte�
 
 最后，Emacs对Unicode进行了扩展，增加了256个额外的“字符”来表示原字节。这样允许自带的原字节与UTF-8序列不同。例如，它可以用来区别编码值U+0041和原字节#x41。要我说的话，这不太常用。
 
-* Combining Characters
+* 组合字符（Combining Characters）
 
-Some Unicode characters are defined as combining characters. These characters
-modify the non-combining character that appears before it, typically with
-accents or diacritical marks.
+有些Unicode字符定义为组合字符。这些字符的作用是修改它前面的非组合字符，典型作用是加重或者变音标记。
 
-For example, the word “naïve” can be written as six characters as "nai\
-u0308ve". The fourth character, U+0308 (COMBINING DIAERESIS), is a combining
-character that changes the “i” (U+0069 LATIN SMALL LETTER I) into an umlaut
-character.
+举个例子，单词“naïve”可以写作这6个字符"nai\u0308ve"。第4个字符U+0308（组合分音符）就是一个组合字符，用来将“i” (U+0069 LATIN SMALL LETTER I)变成一个变音字符。
 
-The most commonly accented characters have a code of their own. These are
-called precomposed characters. This includes ï (U+00EF LATIN SMALL LETTER I
-WITH DIAERESIS). This means “naïve” can also be written as five characters as
-"na\u00EFve".
+通常的加重字符也有它自己的编码值，叫做预组合字符（precomposed characters），包括ï (U+00EF LATIN SMALL LETTER I WITH DIAERESIS)。所以“naïve”也可以写作这5个字符"na\u00EFve"。
 
-** Normalization
+** 归一化（Normalization）
 
-So what happens when comparing two different representations of the same text?
-They’re not equal.
+那么比较两个两个不同表示的字符会结果如何呢？
+
+不相等。
 
 #+BEGIN_SRC emacs-lisp
   (string= "nai\u0308ve" "na\u00EFve")
   ;; => nil
 #+END_SRC
 
-To deal with situations like this, the Unicode standard defines four different
-kinds of normalization. The two most important ones are NFC (composition) and
-NFD (decomposition). The former uses precomposed characters whenever possible
-and the latter breaks them apart. The functions ucs-normalize-NFC-string and
-ucs-normalize-NFD-string perform this operation.
+为了应对这种情况，Unicode标准定义了4种不同的归一化。其中最重要的两种是NFC（组合）和NFD（分解）。前者尽可能地使用预组合字符而后者尽可能地将其拆分。ucs-normalize-NFC-string和ucs-normalize-NFD-string函数用来实现这两个操作。
 
-Pitfall #1: Proper string comparison requires normalization. It doesn’t matter
-which normalization you use (though NFD should be slightly faster), you just
-need to use it consistently. Unfortunately this can get tricky when using
-equal to compare complex data structures with multiple strings.
+*陷阱提示#1： 务必先进行归一化再进行字符串比较。*  不管使用哪种归一化（NFD要稍微快一点），但需要一致。不幸的是，当你比较复杂的多字符串时依然可能产生奇怪的结果。
 
 #+BEGIN_SRC emacs-lisp
   (string= (ucs-normalize-NFD-string "nai\u0308ve")
@@ -98,9 +84,7 @@ equal to compare complex data structures with multiple strings.
   ;; => t
 #+END_SRC
 
-Emacs itself fails to do this. It doesn’t normalize strings before interning
-them, which is probably a mistake. This means you can have differently defined
-variables and functions with the same canonical name.
+用Emacs自带的函数比较会失败，它在使用intern函数前不会做归一化，也许这是个错误。这意味着你可以使用相同的名称（intern转换的canonical symbol）来定义不同的变量和函数。
 
 #+BEGIN_SRC emacs-lisp
   (eq (intern "nai\u0308ve")
@@ -119,35 +103,21 @@ variables and functions with the same canonical name.
   ;; => "I'm going to sabotage your team."
 #+END_SRC
 
-** String Width
+** 字符串宽度
 
-There are three ways to quantify multibyte text. These are often the same
-value, but in some circumstances they can each be different.
+有三种方法可以用来计算多字节文本的数量，通常它们的值相同，但是在有些情况下它们却各不不同。
 
-  * length: number of characters, including combining characters
-  * bytes: number of bytes in its UTF-8 encoding
-  * width: number of columns it would occupy in the current buffer
+  * 长度： 字符个数，包括组合字符
+  * 字节数： 用UTF-8编码的字节数
+  * 宽度： 占当前缓冲区的列数
 
-Most of the time, one character is one column (a width of one). Some
-characters, like combining characters, consume no columns. Many Asian
-characters consume two columns (U+4000, 䀀). Tabs consume tab-width columns,
-usually 8.
+大多数时候，一个字符就是一列（一个字符的宽度）。有一些字符，比如组合字符，不占用宽度。一些亚洲国家字符占两列，比如(U+4000, 䀀)。Tab占用tab-width列，通常是8。
 
-Generally, a string should have the same width regardless of which whether
-it’s NFD or NFC. However, due to bugs and incomplete Unicode support, this
-isn’t strictly true. For example, some combining characters, such as U+20DD ⃝,
-won’t combine correctly in Emacs nor in other applications.
+通常来说，不管使用NFD或者NFC，字符串的宽度是一样的。然而，由于bug和对Unicode的支持不完整，这个说法不是完全正确。例如，有些组合字符，如U+20DD, ⃝  在Emacs中或者其他应用程序中无法正确地组合。
 
-Pitfall #2: Always measure text by width, not length, when laying out a buffer
-. Width is measured with the string-width function. This comes up when laying
-out tables in a buffer. The number of characters that fit in a column depends
-on what those characters are.
+*陷阱提示#2： 当展示一个buffer时，务必使用宽度而不是长度来计算文本。*  宽度通过string-width函数来计算，当展示buffer中的表格的时候会被调用。每列中适当的字符个数要根据是什么字符而定。
 
-Fortunately I accidentally got this right in [[http://nullprogram.com/blog/2013/09/04/][Elfeed]] because I used the format
-function for layout. The %s directive operates on width, as would be expected.
-However, this has the side effect that the output of may format change
-depending on the current buffer! Pitfall #3: Be mindful of the current buffer
-when using the format function.
+幸运的是，有次碰巧通过[[http://nullprogram.com/blog/2013/09/04/][Elfeed]]得到了正确结果，因为我使用了format函数来展示。如希望地那样，%s指示符用来操作宽度。然而有个副作用：很多格式化的输出会根据当前buffer而改变！ *陷阱提示#3： 使用format函数时务必注意当前buffer。*
 
 #+BEGIN_SRC emacs-lisp
   (let ((tab-width 4))
@@ -159,9 +129,9 @@ when using the format function.
   ;; => 0
 #+END_SRC
 
-** String Reversal
+** 字符串反转
 
-Say you want to reverse a multibyte string. Simple, right?
+加入要将一个多字节字符串反转。很简单，对吗？
 
 #+BEGIN_SRC emacs-lisp
   (defun reverse-string (string)
@@ -171,44 +141,43 @@ Say you want to reverse a multibyte string. Simple, right?
   ;; => "cba"
 #+END_SRC
 
-Wrong! The combining characters will get flipped around to the wrong side of
-the character they’re meant to modify.
+错了！组合字符经反转会对之前它右边的字符进行修改而产生错误。
 
 #+BEGIN_SRC emacs-lisp
   (reverse-string "nai\u0308ve")
   ;; => "ev̈ian"
 #+END_SRC
 
-Pitfall #4: [[https://github.com/mathiasbynens/esrever][Reversing Unicode strings is non-trivial]]. The [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] page is
-full of incorrect examples, and [[http://nullprogram.com/blog/2012/11/15/][I’m personally guilty]] of this, too. The other
-day I [[https://github.com/magnars/s.el/pull/58][submitted a patch to s.el]] to correct its s-reverse function for Unicode.
-If it’s accepted, you should never need to worry about this.
+*Pitfall #4: [[https://github.com/mathiasbynens/esrever][Unicode字符串反转务必小心]]。* [[http://rosettacode.org/wiki/Reverse_a_string][Rosetta Code]] 页面罗列了许多错误的案例， [[http://nullprogram.com/blog/2012/11/15/][我个人也出过错]] 。之后我[[https://github.com/magnars/s.el/pull/58][提交了一个s.el的补丁]] 来修正Unicode的s-reverse函数。
+如果这个能被接受，你就不用再担心这个了。
 
-** Regular Expressions
+** 正则表达式
 
-Regular expressions operate on code points. This means combining characters
-are counted separately and the match may change depending on how characters
-are composed. To avoid this, you might want to consider NFC normalization
-before performing some kinds of regular expressions.
+正则表达式基于编码值。组合字符单独计算，匹配会根据字符如何组合可能不不同。为了避免这种情况，你需要在做某些正则匹配之前进行NFC归一化。
 
 #+BEGIN_SRC emacs-lisp
   ;; Like string= from before:
   (string-match-p  "na\u00EFve" "nai\u0308ve")
   ;; => nil
 
+  ;; Use NFC normilization
+  (string-match-p (ucs-normalize-NFC-string "na\u00EFve") 
+                  (ucs-normalize-NFC-string "nai\u0308ve"))
+  ;; => 0
+
   ;; The . only matches part of the composition
   (string-match-p "na.ve" "nai\u0308ve")
   ;; => nil
+  
+  ;; .. matches i and the composition character
+  (string-match-p "na..ve" "nai\u0308ve")
+  ;; => 0
+
 #+END_SRC
 
-Pitfall #5: Be mindful of combining characters when using regular expressions.
-Prefer NFC normalization when dealing with regular expressions.
+*陷阱提示#5： 使用正则表达式时务必注意组合字符，且优先选择NFC归一化。*
 
-Another potential problem is ranges, though this is quite uncommon. Ranges of
-characters can be expressed in inside brackets, e.g. [a-zA-Z]. If the range
-begins or ends with a decomposed combining character you won’t get the proper
-range because its parts are considered separately by the regular expression
-engine.
+另一个潜在的问题是范围，尽管这不太常见。字符的范围可以用中括号来表达，比如[a-zA-Z]。如果范围以分解的组合字符开始或结束，将得不到正确的结果，因为组合字符部分会被正则表达式引擎单独处理。
 
 #+BEGIN_SRC emacs-lisp
   (defvar match-weird "[\u00E0-\u00F6]+")
@@ -220,10 +189,7 @@ engine.
   ;; => nil
 #+END_SRC
 
-It’s especially important to keep all of this in mind when sanitizing
-untrusted input, such as when using Emacs as a web server. An attacker might
-use a denormalized or strange grapheme cluster to bypass a filter.
-
+在审查一些不受信任的输入时将所有这些牢记于心是非常重要的，比如使用Emacs作为Web server，攻击者可能使用非归一化或奇怪的字符串来绕开过滤器。
 * Interacting with the World
 
 Here’s a mistake I’ve made twice now. Emacs uses UTF-8 internally, regardless
