@@ -1,8 +1,8 @@
 * Emacs和UTF-8
 
-*在Emacs内部所有的文本都用UTF-8格式存储* ，这是个非常明智的选择！当Emacs输出文本，比如写到文件或者传到另一个进程，Emacs会自动根据文件或进程所配置的编码系统来对文本进行编码。当读取一个文件或者进程的文本时，Emacs要么它将其转换为UTF-8编码格式，要么保持原始字节。
+*在Emacs内部所有的文本都用UTF-8格式存储* ，这是个非常明智的选择！当Emacs输出文本，比如写到文件或者传到另一个进程，Emacs会自动根据文件或进程所配置的编码系统来对文本进行编码。当读取一个文件或者进程的文本时，Emacs要么它将其转换为UTF-8编码格式，要么保持原字节。
 
-关于这点在Emacs中有2种模式：单字节和多字节。单字节strings/buffers就是原始字节，它们满足常量时间O(1)访问但是进能保存单字节值[[http://nullprogram.com/blog/2014/01/04/][byte-code compiler outputs unibyte strings]]。
+关于这点在Emacs中有2种模式：单字节和多字节。单字节strings/buffers就是原字节，它们满足常量时间O(1)访问但是进能保存单字节值[[http://nullprogram.com/blog/2014/01/04/][byte-code compiler outputs unibyte strings]]。
 
 多字节strings/buffers保存UTF-8编码的编码值。字符访问时间复杂读是O(n)因为需要遍历一边string/buffer来计算字符个数。
 
@@ -13,20 +13,11 @@
   ;; => "\317\200"
 #+END_SRC
 
-This can be reversed with string-as-multibyte), to change a unibyte string
-holding UTF-8 encoded text back into a multibyte string. Note that these
-functions are different than string-to-unibyte and string-to-multibyte, which
-will attempt a conversion rather than preserving the raw bytes.
+使用string-as-multibyte可以反向将UTF-8编码的单字节string转换成多字节文本。需要注意这两个函数与string-to-unibyte和string-to-multibyte是不同的，后者是进行的是转换而不是保持原字节。
 
-The length and buffer-size functions always count characters in multibyte and
-bytes in unibyte. Being UTF-8, there are no surrogate pairs to worry about
-here. The string-bytes and position-bytes functions return byte information
-for both multibyte and unibyte.
+length和buffer-size函数总是使用multibyte计算字符以及使用unibyte计算字节。使用UTF-8，则不需要担心代理对。string-bytes和position-bytes函数返回multibyte和unibyte两种类型的字节信息。
 
-To specify a Unicode character in a string literal without using the character
-directly, use \uXXXX. The XXXX is the hexadecimal code point for the character
-and is always 4 digits long. For characters outside the BMP, which won’t fit
-in four digits, use a capital U with eight digits: \UXXXXXXXX.
+如果想要在字符串中指定Unicode字符而又不直接使用字符，可以用\uXXXX。XXXX是该字符的十六进制编码值，长度总是4。对于第零平面外的字符，4个字符不够，要使用大写的U加上8位数字：\UXXXXXXXX。
 
 #+BEGIN_SRC emacs-lisp
   "\u03C0"
@@ -36,7 +27,4 @@ in four digits, use a capital U with eight digits: \UXXXXXXXX.
   ;; => "💩"  (PILE OF POO)
 #+END_SRC
 
-Finally, Emacs extends Unicode with 256 additional “characters” representing
-raw bytes. This allows raw bytes to be embedded distinctly within UTF-8
-sequences. For example, it’s used to distinguish the code point U+0041 from
-the raw byte #x41. As far as I can tell, this isn’t used very often.
+最后，Emacs对Unicode进行了扩展，增加了256个额外的“字符”来表示原字节。这样允许自带的原字节与UTF-8序列不同。例如，它可以用来区别编码值U+0041和原字节#x41。要我说的话，这不太常用。
