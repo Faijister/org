@@ -1,12 +1,3 @@
-    ** Footnotes  
-    The Org homepage[fn:1] now looks a lot better than it used to.  
-      
-    Tom is a boy[fn:name].  
-      
-    Jim is a boy[fn:: This is the inline definition of this footnote] too.  
-      
-    Lily is a girl[fn:lily: a definition].  
-      
-      
-    [fn:1] The link is: http://orgmode.org  
-    [fn:name] Tom is a boy.  
+The Org homepage^[[http://orgmode.org][1]] now looks a lot better than it used to.  
+* Footnotes:
+^[[http://orgmode.org][1]]
