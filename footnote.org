@@ -1,7 +1,1 @@
-<<<<<<< HEAD
 The Org homepage^[[http://orgmode.org][1]] now looks a lot better than it used to.
-=======
-The Org homepage^[[http://orgmode.org][1]] now looks a lot better than it used to.  
-* Footnotes:
-^[[http://orgmode.org][1]]
->>>>>>> 6b980025814a9f348d286577cc22d831b8e93150
