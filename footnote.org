@@ -1,3 +1,4 @@
+#+OPTIONS: toc:t ^:{} f:t
 The Org homepage[fn:1]now looks a lot better than it used to.
 * Footnotes:
 
