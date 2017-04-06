@@ -1,1 +1,1 @@
-The Org homepage^[[http://orgmode.org#fn.1][1]] now looks a lot better than it used to.
+The Org homepage^[[http://orgmode.org][1]] now looks a lot better than it used to.
