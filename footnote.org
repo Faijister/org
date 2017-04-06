@@ -2,4 +2,4 @@
 The Org homepage[fn:1]now looks a lot better than it used to.
 * Footnotes:
 
-[fn:1] http://orgmode.org
+[fn:1] The link is: http://orgmode.org
