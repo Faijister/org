@@ -1,6 +1,7 @@
 #+TITLE: Doom Emacs
-#+DESCRIPTION doom emacs configuration
-#+AUTHOR fannyxl
+#+OPTIONS: \n:t
+#+DESCRIPTION: doom emacs configuration
+#+AUTHOR: fannyxl
 * China mirror
 File: .emacs.d/core/core-packages.el
 proto: http
