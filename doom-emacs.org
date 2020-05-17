@@ -3,14 +3,18 @@
 #+DESCRIPTION: doom emacs configuration
 #+AUTHOR: fannyxl
 * China mirror
-File: .emacs.d/core/core-packages.el
-- proto: http
+File: .doom.d/config.el
 - gnu: "://elpa.emacs-china.org/gnu/
 - melpa: "://elpa.emacs-china.org/melpa/
 - org: "://elpa.emacs-china.org/org/
 
 Change as below:
-[[./images/20200517153354.png]]
+#+begin_quote
+(setq package-archives
+      '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+        ("melpa" . "http://elpa.emacs-china.org/melpa/")
+        ("org" . "http://elpa.emacs-china.org/org/")))
+#+end_quote
 
 * PDF reader
 - Need install MSYS2 [https://www.msys2.org/]
@@ -30,3 +34,6 @@ Change as below:
   [[./images/neotree.png]]
 - install treemacs
   [[./images/treemacs.png]]
+
+- Tree view in a project
+  [[./images/20200517153354.png]]
