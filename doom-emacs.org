@@ -13,8 +13,20 @@ Change as below:
 [[./images/20200517153354.png]]
 
 * PDF reader
-install pdf-tools
+- Need install MSYS2 [https://www.msys2.org/]
+- May need change Pacman mirror
+  [[./images/pacman-mirror.png]]
+- install pdf-tools in Emacs
+  - M-x package-install pdf-tools
+  - M-x pdf-tools-install
+    [[./images/pdf-tools-install.png]]
+- Open Pdf will automactially enter pdf-view mode
+[[./images/pdf-tools.png]]
 
 * Project tree
-install neotree
-install treemacs-*
+- init.el
+  [[./images/init.png]]
+- install neotree
+  [[./images/neotree.png]]
+- install treemacs
+  [[./images/treemacs.png]]
