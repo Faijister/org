@@ -1,0 +1,19 @@
+#+TITLE: Doom Emacs
+#+DESCRIPTION doom emacs configuration
+#+AUTHOR fannyxl
+* China mirror
+File: .emacs.d/core/core-packages.el
+proto: http
+gnu: "://elpa.emacs-china.org/gnu/
+melpa: "://elpa.emacs-china.org/melpa/
+org: "://elpa.emacs-china.org/org/
+
+Change as below:
+[[./images/20200517153354.png]]
+
+* PDF reader
+install pdf-tools
+
+* Project tree
+install neotree
+install treemacs-*
