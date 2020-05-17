@@ -3,12 +3,8 @@
 #+DESCRIPTION: doom emacs configuration
 #+AUTHOR: fannyxl
 * China mirror
-File: .doom.d/config.el
-- gnu: "://elpa.emacs-china.org/gnu/
-- melpa: "://elpa.emacs-china.org/melpa/
-- org: "://elpa.emacs-china.org/org/
+Add below lines in file: .doom.d/config.el
 
-Change as below:
 #+begin_quote
 (setq package-archives
       '(("gnu" . "http://elpa.emacs-china.org/gnu/")
