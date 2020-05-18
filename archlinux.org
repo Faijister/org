@@ -1,0 +1,13 @@
+#+TITLE: Archlinux
+#+DESCRIPTION: Archlinux Learn
+#+AUTHOR: FannyXL
+* GUI installation
+- rofi
+- i3wm
+- Xorg
+- feh/nitrogen
+- lightdm/sddm
+- polybar/powerline
+- fish/zsh
+- urxvt
+- tmux
