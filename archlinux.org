@@ -1,6 +1,62 @@
 #+TITLE: Archlinux
 #+DESCRIPTION: Archlinux Learn
 #+AUTHOR: FannyXL
+* Base installation
+- Pre-Install
+#+begin_sh options
+ip a
+ping archlinux.org
+timedatectl set-ntp true
+timedatectl status
+date
+fdisk -l
+cfdisk /dev/sda
+mkfs.ext4 /dev/sda1
+mkswap /dev/sda2
+swapon /dev/sda2
+mount /dev/sda1 /mnt
+vi /etc/pacman.d/mirrorlist
+#+end_sh
+- Install
+#+begin_sh options
+pacstrap /mnt base linux linux-firmware
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+#+end_sh
+[[./images/arch-pre-install.png]]
+- Configuration
+#+begin_sh options
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+hwclock --systohc
+timedatectl set-ntp true
+date
+pacman -S vim
+vim /etc/locale.gen
+locale-gen
+vim /etc/locale.conf
+vi /etc/hostname
+vi /etc/hosts
+pacman -S dhcpcd
+systemctl enable dhcpcd
+mkinitcpio -P
+passwd
+useradd -m efuuxii
+passwd efuuxii
+usermod -aG wheel,audio,video,storage,power efuuxii
+pacman -S sudo
+vim /etc/sudoers
+pacman -S openssh
+vim /etc/ssh/sshd_config
+systemctl enable sshd
+pacman -S grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+cat /boot/grub/grub.cfg
+exit
+reboot
+#+end_sh
+[[./images/arch-install-1.png]]
+[[./images/arch-install-2.png]]
 * GUI installation
 - rofi
 - i3wm
