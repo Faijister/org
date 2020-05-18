@@ -3,7 +3,7 @@
 #+AUTHOR: FannyXL
 * Base installation
 - Pre-Install
-#+begin_sh options
+#+begin_src sh
 ip a
 ping archlinux.org
 timedatectl set-ntp true
@@ -16,7 +16,7 @@ mkswap /dev/sda2
 swapon /dev/sda2
 mount /dev/sda1 /mnt
 vi /etc/pacman.d/mirrorlist
-#+end_sh
+#+end_src
 - Install
 #+begin_sh options
 pacstrap /mnt base linux linux-firmware
