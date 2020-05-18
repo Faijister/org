@@ -69,3 +69,5 @@ reboot
 - fish/zsh
 - urxvt
 - tmux
+- neofetch
+[[./images/arch-neofetch.png]]
