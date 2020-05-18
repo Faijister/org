@@ -24,7 +24,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 #+end_src
  - images as below:
-[[./images/arch-pre-install.png]]
+ [[./images/arch-pre-install.PNG]]
 - Configuration
 #+begin_src sh
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -57,8 +57,8 @@ exit
 reboot
 #+end_src
  - images as below:
-[[./images/arch-install-1.png]]
-[[./images/arch-install-2.png]]
+ [[./images/arch-install-1.PNG]]
+ [[./images/arch-install-2.PNG]]
 * GUI installation
 - rofi
 - i3wm
