@@ -18,14 +18,15 @@ mount /dev/sda1 /mnt
 vi /etc/pacman.d/mirrorlist
 #+end_src
 - Install
-#+begin_sh options
+#+begin_src sh
 pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
-#+end_sh
+#+end_src
+ - images as below:
 [[./images/arch-pre-install.png]]
 - Configuration
-#+begin_sh options
+#+begin_src sh
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 hwclock --systohc
 timedatectl set-ntp true
@@ -54,7 +55,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 cat /boot/grub/grub.cfg
 exit
 reboot
-#+end_sh
+#+end_src
+ - images as below:
 [[./images/arch-install-1.png]]
 [[./images/arch-install-2.png]]
 * GUI installation
