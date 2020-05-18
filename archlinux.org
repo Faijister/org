@@ -61,6 +61,7 @@ reboot
  [[./images/arch-install-2.PNG]]
 * GUI installation
 - rofi
+[[./images/rofi.png]]
 - i3wm
 - Xorg
 - feh/nitrogen
