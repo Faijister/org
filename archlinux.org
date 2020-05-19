@@ -94,9 +94,9 @@ pacman -S virtualbox-guest-utils
 systemctl enable vboxservice
 #+end_sh
 
-VirtualBox Setting as below:
+- VirtualBox Setting as below:
 [[./images/Virtualbox-share-folder-setting.png]]
-Arch Linux reboot and check mount:
+- Arch Linux reboot and check mount:
 [[./images/arch-linux-sharefolder-mounted.png]]
 
 * Proxychains in Arch Linux
