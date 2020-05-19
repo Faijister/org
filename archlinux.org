@@ -74,6 +74,10 @@ reboot
   pacman -S xorg-xinit
   pacman -S xorg-twm xorg-xclock xterm
   #+end_src sh
+  startx GUI [https://wiki.archlinux.org/index.php/Xinit]:
+  [[./images/arch-xorg.PNG]]
+  xorg console output:
+  [[./images/xorg.PNG]]
 - feh/nitrogen
 - lightdm/sddm
 - polybar/powerline
