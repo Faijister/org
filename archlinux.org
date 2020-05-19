@@ -86,3 +86,18 @@ reboot
 - tmux
 - neofetch
 [[./images/arch-neofetch.png]]
+
+* Share folder setting
+#+begin_sh
+pacman -S linux-lts-headers
+pacman -S virtualbox-guest-utils
+systemctl enable vboxservice
+#+end_sh
+
+VirtualBox Setting as below:
+[[./images/Virtualbox-share-folder-setting.png]]
+Arch Linux reboot and check mount:
+[[./images/arch-linux-sharefolder-mounted.png]]
+
+* Proxychains in Arch Linux
+[[./images/archlinux-proxychains.png]]

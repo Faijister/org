@@ -1,0 +1,5 @@
+#+TITLE: Git
+#+DESCRIPTION: Git related tips
+#+AUTHOR: LEO FU
+* Git set username and email
+[[./images/github-set-user.png]]
