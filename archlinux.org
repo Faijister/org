@@ -63,7 +63,17 @@ reboot
 - rofi
 [[./images/rofi.png]]
 - i3wm
-- Xorg
+- Xorg  [Tue May 19 11:10:32 2020]
+  Ref: [https://wiki.archlinux.org/index.php/Xorg]
+  #+begin_src sh
+  pacman -S xorg-server
+  lspci | grep -e VGA -e 3D
+  pacman -Ss xf86-video
+  pacman -S virtualbox-guest-utils
+  pacman -S xf86-video-vmware
+  pacman -S xorg-xinit
+  pacman -S xorg-twm xorg-xclock xterm
+  #+end_src sh
 - feh/nitrogen
 - lightdm/sddm
 - polybar/powerline
