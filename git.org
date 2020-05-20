@@ -3,3 +3,15 @@
 #+AUTHOR: LEO FU
 * Git set username and email
 [[./images/github-set-user.png]]
+* Connect to Github via SSH
+Using the SSH protocol, you can connect and authenticate to remote servers and services. With SSH keys, you can connect to GitHub without supplying your username or password at each vist.
+- Generate a SSH
+  #+begin_src sh options
+  ssh-keygen -t rsa -b 4096 -C "xlfu1989@gmail.com"
+  #+end_src sh
+- Add SSH key to the ssh-agent (USE BASH)
+  #+begin_src sh options
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
+  #+end_src sh
+- Add the SSH key to GitHub account, Settings > SSH GPG keys
