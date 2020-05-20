@@ -107,5 +107,15 @@ systemctl enable vboxservice
 - Arch Linux reboot and check mount:
 [[./images/arch-linux-sharefolder-mounted.png]]
 
+* Shadowsocks + v2ray
+Ref: [https://wiki.archlinux.org/index.php/Shadowsocks]
+#+begin_src sh options
+pacman -S shadowsocks-libev
+pacman -S shadowsocks-v2ray-plugin
+sudo mkdir /etc/shadowsocks
+sudo vim /etc/shadowsocks/config.json
+ss-local -c /etc/shadowsocks/config.json
+#+end_src sh
+[[./images/arch-shadowsocks-v2ray.PNG]]
 * Proxychains in Arch Linux
 [[./images/archlinux-proxychains.png]]
