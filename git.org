@@ -15,3 +15,4 @@ Using the SSH protocol, you can connect and authenticate to remote servers and s
   ssh-add ~/.ssh/id_rsa
   #+end_src sh
 - Add the SSH key to GitHub account, Settings > SSH GPG keys
+- Test
