@@ -118,4 +118,10 @@ ss-local -c /etc/shadowsocks/config.json
 #+end_src sh
 [[./images/arch-shadowsocks-v2ray.PNG]]
 * Proxychains in Arch Linux
+Ref: [https://github.com/haad/proxychains]
+- Comment out line socks4 and append lines to /etc/proxychains.conf
+#+begin_src sh options
+# socks4        127.0.0.1 9050
+socks5 127.0.0.1 1080
+#+end_src sh
 [[./images/archlinux-proxychains.png]]
