@@ -1,4 +1,6 @@
 #+TITLE:README
+#+DESCRIPTION: Knowledge recording using Emacs org mode
 #+AUTHOR: fannyxl
 
 * Emacs org mode
+This repo is aim to record some daily knowledge using Emacs Org mode
