@@ -82,10 +82,16 @@ reboot
 - lightdm/sddm
 - polybar/powerline
 - fish/zsh
-- urxvt
+- urxvt/xterm/terminator
 - tmux
 - neofetch
 [[./images/arch-neofetch.png]]
+- X11 Forwarding
+  - Server side, startx and modify sshd_config to enable X11Forwarding
+    X11Forwarding yes
+    systemctl restart sshd
+  - Client side, using MobaXterm will automatically connect with X11Forwarding checked OK
+    [[./images/arch-X11-forward.PNG]]
 
 * Share folder setting
 #+begin_sh
