@@ -3,4 +3,6 @@
 #+AUTHOR: fannyxl
 
 * Emacs org mode
-This repo is aim to record some daily knowledge using Emacs Org mode
+This repo is aim to record some daily knowledge using Emacs Org mode.\\
+Below are the list
+- git: [[./git.org]]
