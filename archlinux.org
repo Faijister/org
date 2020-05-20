@@ -88,8 +88,10 @@ reboot
 [[./images/arch-neofetch.png]]
 - X11 Forwarding
   - Server side, startx and modify sshd_config to enable X11Forwarding
+    #+begin_sh options
     X11Forwarding yes
     systemctl restart sshd
+    #+end_sh
   - Client side, using MobaXterm will automatically connect with X11Forwarding checked OK
     [[./images/arch-X11-forward.PNG]]
 
