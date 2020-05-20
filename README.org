@@ -5,4 +5,7 @@
 * Emacs org mode
 This repo is aim to record some daily knowledge using Emacs Org mode.\\
 Below are the list
-- [[./git.org][git]]
+- [[file:git.org][git]]
+- [[file:archlinux.org][arch linux]]
+- [[file:doom-emacs.org][doom emacs]]
+- [[file:network.org][network]]
