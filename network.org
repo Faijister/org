@@ -3,6 +3,6 @@
 #+AUTHOR: Leo Fu
 * TCP TIME_WAIT & CLOSE_WAIT
 - TIME_WAIT
-  TIME_WAIT indicates that local endpoint (this side) has closed the connection.
+  indicates that local endpoint (this side) has closed the connection.
 - CLOSE_WAIT
-  CLOSE_WAIT indicates that remote endpoint (peer side) has closed the connection.
+  indicates that remote endpoint (peer side) has closed the connection.
