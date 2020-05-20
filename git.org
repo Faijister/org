@@ -15,4 +15,8 @@ Using the SSH protocol, you can connect and authenticate to remote servers and s
   ssh-add ~/.ssh/id_rsa
   #+end_src sh
 - Add the SSH key to GitHub account, Settings > SSH GPG keys
-- Test
+- Use SSH instead of HTTPS
+  #+begin_src sh options
+  git remote get-url --all origin
+  git remote set-url origin git@github.com:FannyXL/org.git
+  #+end_src sh
