@@ -96,11 +96,11 @@ reboot
     [[./images/arch-X11-forward.PNG]]
 
 * Share folder setting
-#+begin_sh
-pacman -S linux-lts-headers
+#+begin_src sh
+pacman -S linux-lts-headers # may not need
 pacman -S virtualbox-guest-utils
 systemctl enable vboxservice
-#+end_sh
+#+end_src
 
 - VirtualBox Setting as below:
 [[./images/Virtualbox-share-folder-setting.png]]
