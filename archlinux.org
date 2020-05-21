@@ -101,6 +101,9 @@ pacman -S alsa-utils
 #+end_src
 Set Audio, M - toggle Mute/~Mute
 [[./images/arch-alsamixer.png]]
+#+begin_src sh
+speaker-test # Do not need to install any more package
+#+end_src
 [[./images/arch-speakertest.png]]
 * Share folder setting
 #+begin_src sh
