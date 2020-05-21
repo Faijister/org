@@ -95,6 +95,13 @@ reboot
   - Client side, using MobaXterm will automatically connect with X11Forwarding checked OK
     [[./images/arch-X11-forward.PNG]]
 
+* Audio
+#+begin_src sh
+pacman -S alsa-utils
+#+end_src
+Set Audio, M - toggle Mute/~Mute
+[[./images/arch-alsamixer.png]]
+[[./images/arch-speakertest.png]]
 * Share folder setting
 #+begin_src sh
 pacman -S linux-lts-headers # may not need
