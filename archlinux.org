@@ -98,6 +98,7 @@ reboot
 * Audio
 #+begin_src sh
 pacman -S alsa-utils
+alsamixer
 #+end_src
 Set Audio, M - toggle Mute/~Mute
 [[./images/arch-alsamixer.png]]
