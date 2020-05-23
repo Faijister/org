@@ -34,3 +34,8 @@ REF: [https://github.com/politza/pdf-tools]
 
 - Tree view in a project
   [[./images/20200517153354.png]]
+* clean invalid projectitle cache
+Sometimes some old files exist when open project, try below command to remove them
+#+begin_src sh
+M-x projectitle-invalidate-cache
+#+end_src

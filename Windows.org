@@ -1,0 +1,15 @@
+#+TITLE: Windows Tips
+#+DESCRIPTION: Daily Windows usage tips
+#+AUTHOR: FannyXL
+* WPS Cleanup
+Open PS (Powershell) and check
+#+begin_src sh
+Get-Process -Name wps
+#+end_src
+[[./images/win-wps-process.png]]
+\\
+To stop WPS
+#+begin_src sh
+Stop-Process -Name wps -Force
+#+end_src
+[[./images/win-wps-stop.png]]
