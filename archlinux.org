@@ -63,6 +63,12 @@ reboot
 - rofi
 [[./images/rofi.png]]
 - i3wm
+  #+begin_src sh
+  # ~/.config/i3/config
+  exec xrandr --output Virtual1 --primary --mode 1920x1200 --pos 0x0 --rotate normal
+  exec feh --randomize --bg-fill ~/picture
+  exec feh --randomize --bg-scale ~/picture
+  #+end_src
 - Xorg  [Tue May 19 11:10:32 2020]
   Ref: [https://wiki.archlinux.org/index.php/Xorg]
   #+begin_src sh
