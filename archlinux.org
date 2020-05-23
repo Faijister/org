@@ -137,8 +137,7 @@ socks5 127.0.0.1 1080
 #+end_src sh
 [[./images/archlinux-proxychains.png]]
 * SwitchyOmega for Chromium
-- Download CRX
-[https://github.com/FelisCatus/SwitchyOmega/releases]
+- Download CRX from [https://github.com/FelisCatus/SwitchyOmega/releases]
 - Unpack
 #+begin_src sh
 pacman -S unzip
@@ -146,7 +145,7 @@ unzip SwitchyOmega_Chromium.crx
 rm SwitchyOmega_Chromium.crx
 #+end_src
 - Load Unpack
-  Open chrome://extensions in Chromium > enable Developer mode > Load unpacked > Select Folder
+  Open =chrome://extensions= in Chromium > enable Developer mode > Load unpacked > Select Folder
   [[./images/arch-chromium-switchyomega.png]]
   [[./images/arch-chromium-switchyomega2.png]]
   [[./images/arch-chromium-switchyomega3.png]]
