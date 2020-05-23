@@ -79,13 +79,15 @@ reboot
   pacman -S xf86-video-vmware
   pacman -S xorg-xinit
   pacman -S xorg-twm xorg-xclock xterm
-  #+end_src sh
+  #+end_src
   startx GUI [https://wiki.archlinux.org/index.php/Xinit]:
   [[./images/arch-xorg.PNG]]
   xorg console output:
   [[./images/xorg.PNG]]
 - feh/nitrogen
-- lightdm/sddm
+- lightdm/sddm \\
+  sddm
+  [[./images/sddm.png]]
 - polybar/powerline
 - fish/zsh
 - urxvt/xterm/terminator
