@@ -37,5 +37,5 @@ REF: [https://github.com/politza/pdf-tools]
 * clean invalid projectitle cache
 Sometimes some old files exist when open project, try below command to remove them
 #+begin_src sh
-M-x projectitle-invalidate-cache
+M-x projectile-invalidate-cache
 #+end_src
