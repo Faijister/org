@@ -144,7 +144,7 @@ pacman -S unzip
 unzip SwitchyOmega_Chromium.crx
 rm SwitchyOmega_Chromium.crx
 #+end_src
-- Load Unpack
+- Load Unpack\\
   Open =chrome://extensions= in Chromium > enable Developer mode > Load unpacked > Select Folder
   [[./images/arch-chromium-switchyomega.png]]
   [[./images/arch-chromium-switchyomega2.png]]
