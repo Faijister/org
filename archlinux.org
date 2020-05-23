@@ -114,6 +114,11 @@ Set Audio, M - toggle Mute/~Mute
 speaker-test # Do not need to install any more package
 #+end_src
 [[./images/arch-speakertest.png]]
+* Music
+- netease-cloud-music [https://github.com/Rocket1184/electron-netease-cloud-music]
+  [[./images/arch-netease-music.png]]
+  [[./images/arch-netease-music2.png]]
+  [[./images/arch-netease-music3.png]]
 * Share folder setting
 #+begin_src sh
 pacman -S linux-lts-headers # may not need
