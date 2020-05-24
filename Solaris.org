@@ -1,0 +1,11 @@
+#+TITLE: Solaris Internals
+#+DESCRIPTION: <<Solaris Internals Ver 2>>
+#+AUTHOR: Leo Fu
+
+* Part One: Introduction to Solaris Internals
+** Chapter 1 - Introduction
+* Part Two: The Process Model
+** Chapter 2 - The Solaris Process Model
+** Chapter 3 - Scheduling Classes and the Dispatcher
+** Chapter 4 - Interprocess Communication
+** Chapter 5 - Process Rights Management
