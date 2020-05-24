@@ -10,3 +10,4 @@ Below are the list
 - [[file:doom-emacs.org][doom emacs]]
 - [[file:network.org][network]]
 - [[file:Windows.org][Windows]]
+- [[file:Solaris.org][Solaris]]
