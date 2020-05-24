@@ -6,9 +6,7 @@
 Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
 - Soaris is still alive, named now Oracle Solaris.
 [[./images/Solaris-Version-History.png]]
-- OpenSolaris is borned in June of 2005 by Sun Microsystems. \\
-OpenSolaris is dead in 2010 after the acquisition of Sun Microsystems by Oracle. \\
-OpenSolaris short life cycle is as below: \\
+- OpenSolaris is borned in June of 2005 by Sun Microsystems. OpenSolaris is dead in 2010 after the acquisition of Sun Microsystems by Oracle. OpenSolaris short life cycle is as below:
 [[./images/OpenSolaris-Version-History.png]]
 * Part One: Introduction to Solaris Internals
 ** Chapter 1 - Introduction
