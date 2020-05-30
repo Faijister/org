@@ -107,7 +107,7 @@ reboot
      [[./images/powerline-bash.PNG]]
 - fish/zsh
   - fish - help
-    [file:///usr/share/doc/fish/index.html]
+    [file://usr/share/doc/fish/index.html]
     [[./images/fish-help.PNG]]
   - fish - oh my fish!
    [https://github.com/oh-my-fish/oh-my-fish]
@@ -127,6 +127,7 @@ reboot
     Type `help` for instructions on how to use fish
   #+end_src
   [[./images/omf.PNG]]
+  [[./images/omf-theme-lambda.PNG]]
 - urxvt/xterm/terminator
 - tmux
 - neofetch
