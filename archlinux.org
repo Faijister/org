@@ -106,6 +106,27 @@ reboot
       #+end_src
      [[./images/powerline-bash.PNG]]
 - fish/zsh
+  - fish - help
+    [/usr/share/doc/fish/index.html]
+    [[./images/fish-help.PNG]]
+  - fish - oh my fish!
+   [https://github.com/oh-my-fish/oh-my-fish]
+  #+begin_src sh
+  fanny@Fanny-Arch ~> curl -L https://get.oh-my.fish | fish
+    Checking for a sane environment...
+    Installing Oh My Fish to /home/fanny/.local/share/omf...
+    Using release channel "stable".
+    Cloning master from https://github.com/oh-my-fish/oh-my-fish.git...
+    Writing bootstrap to /home/fanny/.config/fish/conf.d/omf.fish...
+    Setting up Oh My Fish configuration...
+    Updating https://github.com/oh-my-fish/packages-main master... Done!
+    Installing package default
+    ✔ default successfully installed.
+    Installation successful!
+    Welcome to fish, the friendly interactive shell
+    Type `help` for instructions on how to use fish
+  #+end_src
+  [[./images/omf.PNG]]
 - urxvt/xterm/terminator
 - tmux
 - neofetch
