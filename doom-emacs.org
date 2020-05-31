@@ -51,14 +51,16 @@ M-x projectile-invalidate-cache
   - Export [ SPC m e l o ]
     [[./images/pdflatex-pkg.PNG]]
     [[./images/pdflatex-exported.PNG]]
-- Arch
+- Arch Linux
   - Install pdflatex & Verify
     #+begin_src sh
     pacman -S texlive-most
     #+end_src
     [[./images/arch-pdflatex.PNG]]
   - Install pdf-tools
+    If pdf-tools are not installed:\\
     [[./images/arch-pdf-nok.PNG]]
+    To install pdf-tools:\\
     #+BEGIN_SRC
     M-x package-install <RET>
     pdf-tools
