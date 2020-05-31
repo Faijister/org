@@ -45,7 +45,7 @@ M-x projectile-invalidate-cache
     1. Option one: MiKTeX [https://miktex.org/download]
     2. Option two: proTeXt [https://www.tug.org/protext/]
     [[./images/pdflatex-download.PNG]]
-  - Install & Verify
+  - Install & Verify\\
     [[./images/pdflatex-install.PNG]]
     [[./images/pdflatex.PNG]]
   - Export [ SPC m e l o ]
