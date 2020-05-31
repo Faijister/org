@@ -34,8 +34,21 @@ REF: [https://github.com/politza/pdf-tools]
 
 - Tree view in a project
   [[./images/20200517153354.png]]
-* clean invalid projectitle cache
+* Clean invalid projectitle cache
 Sometimes some old files exist when open project, try below command to remove them
 #+begin_src sh
 M-x projectile-invalidate-cache
 #+end_src
+* Org export to LaTeX
+- Windows 10
+  - Download pdflatex
+    1. Option one: MiKTeX [https://miktex.org/download]
+    2. Option two: proTeXt [https://www.tug.org/protext/]
+    [[./images/pdflatex-download.PNG]]
+  - Install & Verify
+    [[./images/pdflatex-install.PNG]]
+    [[./images/pdflatex.PNG]]
+  - Export [ SPC m e l o ]
+    [[./images/pdflatex-pkg.PNG]]
+    [[./images/pdflatex-exported.PNG]]
+- Arch
