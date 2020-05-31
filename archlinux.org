@@ -200,3 +200,9 @@ rm SwitchyOmega_Chromium.crx
   [[./images/arch-chromium-switchyomega.png]]
   [[./images/arch-chromium-switchyomega2.png]]
   [[./images/arch-chromium-switchyomega3.png]]
+* Pacman configuration
+- Modify =/etc/pacman.conf=
+  - Uncomment Color, TotalDownload
+  - Add =ILoveCandy=
+  [[./images/pacman-candy.PNG]]
+  [[./images/pacman-eating-candy.PNG]]

@@ -52,3 +52,16 @@ M-x projectile-invalidate-cache
     [[./images/pdflatex-pkg.PNG]]
     [[./images/pdflatex-exported.PNG]]
 - Arch
+  - Install pdflatex & Verify
+    #+begin_src sh
+    pacman -S texlive-most
+    #+end_src
+    [[./images/arch-pdflatex.PNG]]
+  - Install pdf-tools
+    [[./images/arch-pdf-nok.PNG]]
+    #+BEGIN_SRC
+    M-x package-install <RET>
+    pdf-tools
+    M-x pdf-tools-install
+    #+END_SRC
+    [[./images/arch-pdf-ok.PNG]]
