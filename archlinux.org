@@ -206,3 +206,19 @@ rm SwitchyOmega_Chromium.crx
   - Add =ILoveCandy=
   [[./images/pacman-candy.PNG]]
   [[./images/pacman-eating-candy.PNG]]
+* Pinyin Input
+ref[https://wiki.archlinux.org/index.php/fcitx]
+- install =fcitx=
+  #+begin_src sh
+  pacman -S fcitx fcitx-im fcitx-gtk2 fcitx-gtk3 fcitx-qt5 fcitx-qt4 libidn fcitx-sogoupinyin
+  # add below lines in .xinitrc before exec i3
+  # Chinese Input
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS="@im=fcitx"
+  exec fcitx &
+  #+end_src
+- config =fcitx-configtool=
+  快捷键：CTRL + SPC
+  [[./images/arch-linuxpinyin.PNG]]
+  [[./images/archlinux-emacs-pinyin.PNG]]
