@@ -57,10 +57,10 @@ M-x projectile-invalidate-cache
     pacman -S texlive-most
     #+end_src
     [[./images/arch-pdflatex.PNG]]
-  - Install pdf-tools
+  - Install pdf-tools \\
     If pdf-tools are not installed:\\
     [[./images/arch-pdf-nok.PNG]]
-    To install pdf-tools:\\
+    To install pdf-tools:
     #+BEGIN_SRC
     M-x package-install <RET>
     pdf-tools
