@@ -16,6 +16,17 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
 - The Reviewers
 * Part One: Introduction to Solaris Internals
 ** Chapter 1 - Introduction
+*** Solaris key areas of innovation and development
+- Reliability
+- Performance and scalability
+- Manageability
+- Observability
+- Resource management
+*** Key features of Solaris
+- UFS
+- DISM (Dynamic Intimate Shared Memory)
+- SMF (Service Management Framework)
+*** Major subsystem overview
 * Part Two: The Process Model
 ** Chapter 2 - The Solaris Process Model
 ** Chapter 3 - Scheduling Classes and the Dispatcher
