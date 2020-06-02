@@ -23,9 +23,19 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
 - Observability
 - Resource management
 *** Key features of Solaris
-- UFS
+- UFS (Solaris/UNIX File System)
 - DISM (Dynamic Intimate Shared Memory)
 - SMF (Service Management Framework)
+- Zones (Solaris Containers)
+  - Software partitioning technology
+  - Each zone is isolated from other zones
+- DTrace (Dynamic tracing facility)
+  - Software sensor
+  - Induce performance regression
+- X64 arch support
+- IPv6 since Solaris 8, Feb 2000
+- RBAC (Role Based Access Control)
+- ...
 *** Major subsystem overview
 * Part Two: The Process Model
 ** Chapter 2 - The Solaris Process Model
