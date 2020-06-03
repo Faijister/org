@@ -67,3 +67,10 @@ M-x projectile-invalidate-cache
     M-x pdf-tools-install
     #+END_SRC
     [[./images/arch-pdf-ok.PNG]]
+* Neotree
+** Auto Refresh
+- set below variable to be t
+=neo-autorefresh=
+- function
+=neo-global--do-autorefresh=
+=neotree-refrsh=

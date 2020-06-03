@@ -11,3 +11,4 @@ Below are the list
 - [[file:network.org][network]]
 - [[file:Windows.org][Windows]]
 - [[file:Solaris.org][Solaris]]
+- [[file:misc.org][Misc]]
