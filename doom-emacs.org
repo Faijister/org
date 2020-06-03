@@ -74,3 +74,5 @@ M-x projectile-invalidate-cache
 - function
 =neo-global--do-autorefresh=
 =neotree-refrsh=
+* Emacs is sexy
+https://emacs.sexy/
