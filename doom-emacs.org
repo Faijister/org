@@ -82,3 +82,13 @@ https://github.com/xuchunyang/youdao-dictionary.el
   =youdao-dictionary-search-at-point=
 * Issue - Chinese Fonts half show
 [[./images/Chinese-Fonts-Width.PNG]]
+
+#+begin_src emacs_lisp
+;; add below lines in config.el
+;; Chinese
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset (font-spec :family "Microsoft Yahei")))
+;; need do doom/reload
+#+end_src
+[[./images/Chinese-Fonts-Width2.PNG]]
