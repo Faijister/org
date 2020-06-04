@@ -81,3 +81,4 @@ https://github.com/xuchunyang/youdao-dictionary.el
 - function
   =youdao-dictionary-search-at-point=
 * Issue - Chinese Fonts half show
+[[./images/Chinese-Fonts-Width.PNG]]
