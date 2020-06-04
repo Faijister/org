@@ -76,3 +76,8 @@ M-x projectile-invalidate-cache
 =neotree-refrsh=
 * Emacs is sexy
 https://emacs.sexy/
+* Youdao dictionary
+https://github.com/xuchunyang/youdao-dictionary.el
+- function
+  =youdao-dictionary-search-at-point=
+* Issue - Chinese Fonts half show
