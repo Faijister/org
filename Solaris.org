@@ -52,7 +52,7 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
   - Networking
 - Core Kernel + Loadable Modules (7 module types)
 *** Processes, Threads, and Scheduling
-- Kernel (thread) & User process (thread)
+- Kernel (thread) & User process (thread)\\
   Switching execution between threads within the same process is inexpensive, since a virtual memory context switching is not required.
 - Nucleus of the Solaris kernel thread model
   - Kernel threads
