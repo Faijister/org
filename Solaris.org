@@ -36,6 +36,22 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
 - IPv6 since Solaris 8, Feb 2000
 - RBAC (Role Based Access Control)
 - ...
+*** Kernel overview
+- Managing the hardware
+- Supplying a set of system services
+- Process & Thread
+- System calls
+- Key components
+  - System call interface (API)
+  - Process execution & scheduling
+  - Memory management
+  - Resource management
+  - File system
+  - I/O bus and device management
+  - Kernel facilities
+  - Networking
+- Core Kernel + Loadable Modules (7 module types)
+*** Processes, Threads, and Scheduling
 *** Major subsystem overview
 * Part Two: The Process Model
 ** Chapter 2 - The Solaris Process Model
