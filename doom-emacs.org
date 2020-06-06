@@ -16,6 +16,12 @@ Add below lines in file: .doom.d/config.el
 REF: [https://github.com/politza/pdf-tools]
 - Need install MSYS2 [https://www.msys2.org/]
 - May need change Pacman mirror
+  - /etc/pacman.d/mirrorlist.mingw32
+    Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686/
+  - /etc/pacman.d/mirrorlist.mingw64
+    Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64/
+  - /etc/pacman.d/mirrorlist.msys
+    Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
   [[./images/pacman-mirror.png]]
 - install pdf-tools in Emacs
   - M-x package-install pdf-tools
