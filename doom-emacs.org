@@ -98,3 +98,6 @@ https://github.com/xuchunyang/youdao-dictionary.el
 ;; need do doom/reload
 #+end_src
 [[./images/Chinese-Fonts-Width2.PNG]]
+* Issue - Doom Emacs reload warning
+When execute =M-x doom/reload=, report "Can't" regenerate envvar file from within Emacs. Run 'doom env' from the console.
+[[./images/doom-reload-issue.PNG]]
