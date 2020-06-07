@@ -16,6 +16,7 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
 - The Reviewers
 * Part One: Introduction to Solaris Internals
 ** Chapter 1 - Introduction
+This chapter summarize key features of Solaris and take a overview of the major subsystems as a warm-up to the detailed dicussions that follow in the rest of the book.
 *** Solaris key areas of innovation and development
 - Reliability
 - Performance and scalability
@@ -51,7 +52,8 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
   - Kernel facilities
   - Networking
 - Core Kernel + Loadable Modules (7 module types)
-*** Processes, Threads, and Scheduling
+*** Major subsystem overview
+**** Processes, Threads, and Scheduling
 - Kernel (thread) & User process (thread)\\
   Switching execution between threads within the same process is inexpensive, since a virtual memory context switching is not required.
 - Nucleus of the Solaris kernel thread model
@@ -60,7 +62,12 @@ Ref: [https://en.wikipedia.org/wiki/Solaris_(operating_system)] \\
   - Process
   - LWP (Lightweight process)
     The kernel-visible execution context for a user thread.
-*** Major subsystem overview
+- Thread Model
+  user thread ↝ LWP ↝ kernel thread
+**** Interprocess Communication
+**** Signals
+**** Memory Management
+**** Files and File Systems
 * Part Two: The Process Model
 ** Chapter 2 - The Solaris Process Model
 ** Chapter 3 - Scheduling Classes and the Dispatcher
