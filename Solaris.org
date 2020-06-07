@@ -60,9 +60,9 @@ This chapter summarize key features of Solaris and take a overview of the major 
   - Kernel threads
   - User threads
   - Process
-  - LWP (Lightweight process)
+  - LWP (Lightweight process)\\
     The kernel-visible execution context for a user thread.
-- Thread Model
+- Thread Model\\
   user thread ↝ LWP ↝ kernel thread
 **** Interprocess Communication
 **** Signals
