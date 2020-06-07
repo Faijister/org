@@ -64,6 +64,29 @@ This chapter summarize key features of Solaris and take a overview of the major 
     The kernel-visible execution context for a user thread.
 - Thread Model\\
   user thread ↝ LWP ↝ kernel thread
+  #+begin_src sh
+  # Solaris 8
+  /usr/lib/libthread.so (default, user thread - LWP pool - kernel thread)
+  /usr/lib/lwp/libthread.so (alternate, user thread - LWP - kernel thread)
+  # Solaris 9 and later
+  /usr/lib/lwp/libthread.so (default, new model)
+  /usr/lib/libthread.so (alternate, old model)
+  #+end_src
+  old thread model drawbacks
+  - user threads were multiplexed onto a potentially smaller pool of LWPs
+  - required maintaining a runnable thread queue and user thread scheduler at the threads library level
+  - a user thread need to be bound to an LWP before the kernel could schedule it to run on a processor
+  - maintaining a library-level threads scheduler was enormously complex.
+  - additionally, maintaining correct asynchronous signal behavior in the two-level module was quite challenging \\
+  since a user thread that is not masking a posted signal may not be on an LWP when the system attempts to deliver the signal.
+  - finally, issues with concurrency management and scheduling latency could result in suboptimal performance for threaded applications.
+  - the scheduling latency was the effect of waiting for the thread library scheduler to link a user thread to an available LWP
+  - the concurrency issue has to do with maintaining a sufficient number of LWPs such that the process does not have runnable user threads waiting for an execution resource (an LWP)
+  new thread model benefits
+  - Improved performance, scalability and reliability
+  - Reliable signal behavior
+  - Improved adaptive mutex lock implementation
+  - User-level sleep queues for asynchronization objects
 **** Interprocess Communication
 **** Signals
 **** Memory Management
