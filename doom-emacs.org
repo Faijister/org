@@ -82,6 +82,13 @@ M-x projectile-invalidate-cache
 =neotree-refrsh=
 * Emacs is sexy
 https://emacs.sexy/
+** Emacs Themes
+*** zenburn
+https://github.com/bbatsov/zenburn-emacs
+#+begin_src emacs-lisp
+M-x package-install RET zenburn-theme
+M-x load-theme zenburn
+#+end_src
 * Youdao dictionary
 https://github.com/xuchunyang/youdao-dictionary.el
 - function
