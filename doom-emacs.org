@@ -2,6 +2,33 @@
 #+OPTIONS: \n:t
 #+DESCRIPTION: doom emacs configuration
 #+AUTHOR: fannyxl
+* Install Doom Emacs on Arch Linux
+- Install Emacs
+  #+begin_src sh
+  pacman -S git emacs
+  #+end_src
+- Get Doom Emacs Github Repo
+  #+begin_src sh
+  proxychains git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
+  #+end_src
+- Install Doom Emacs
+  #+begin_src sh
+  cd ~/.emacs.d/bin
+  ./doom -d install  # MAY NEED A BOTTLE OF BEER
+  #+end_src
+- Install Doom Emacs Fonts
+  #+begin_src sh
+  # Open Emacs via proxychains(IMPORTANT!!)
+  proxychains emacs
+  M-x all-the-icons-install-fonts
+  # Exit Emacs to shell
+  fc-cache -v
+  #+end_src
+- Misc
+  #+begin_src sh
+  pacman -S ripgrep clang tar fd
+  #+end_src
+
 * China mirror
 Add below lines in file: .doom.d/config.el
 
@@ -11,7 +38,6 @@ Add below lines in file: .doom.d/config.el
         ("melpa" . "http://elpa.emacs-china.org/melpa/")
         ("org" . "http://elpa.emacs-china.org/org/")))
 #+end_src
-
 * PDF reader
 REF: [https://github.com/politza/pdf-tools]
 - Need install MSYS2 [https://www.msys2.org/]
