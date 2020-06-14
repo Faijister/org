@@ -88,8 +88,8 @@ This chapter summarize key features of Solaris and take a overview of the major 
   - Improved adaptive mutex lock implementation
   - User-level sleep queues for asynchronization objects\\
   global process priorities and scheduling\\
-  The Solaris kernel implements a global =thread priority model= for kernel threads. \\
-  The kernel scheduler, or =dispatcher= use the model to decide which kernel thread execute next. \\ Total 170 global priorities, and 7 scheduling classes, higher value means higher priority.
+  The Solaris kernel implements a global =thread priority model= for kernel threads.
+  The kernel scheduler, or =dispatcher= use the model to decide which kernel thread execute next. Total 170 global priorities, and 7 scheduling classes, higher value means higher priority.
   - TS (Time Share Scheduling Class) [DEFAULT] priority change dynamically [0-59]
   - IA (Enhanced TS, Interactive Scheduling Class, GUI) current focus window has higher priority [0-59]
   - FSS (Fair Share Scheduling Class) not priority-based
@@ -104,8 +104,7 @@ Solairs supports 4 different groups of IPC.
 - System V IPC
   Shared Memory, Message Queue, Semaphores
 - POSIX IPC
-  Similar to System V in functionality, but are very different in their implementation. \\
-  Based on =memory map files=
+  Similar to System V in functionality, but are very different in their implementation. POSIX IPC is based on =memory map files=
 - Advanced Solaris IPC
   Solaris Doors
 **** Signals
