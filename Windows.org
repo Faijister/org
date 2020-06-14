@@ -22,3 +22,15 @@ Get-Process -Name wpscloudsvr
 Stop-Process -Name wpscloudsvr -Force
 #+end_src
 [[./images/Windows-wpscloudsvr.png]]
+
+
+#+begin_src sh
+PS C:\Users\fanny> Get-ChildItem Env:LOCALAPPDATA
+
+Name                           Value
+----                           -----
+LOCALAPPDATA                   C:\Users\fanny\AppData\Local
+
+mv C:\Users\fanny\AppData\Local\Kingsoft\WPS Office\wpscloudsvr.exe C:\Users\fanny\AppData\Local\Kingsoft\WPS Office\wpscloudsvr_backup.exe
+touch wpscloudsvr.exe [fake one]
+#+end_src
