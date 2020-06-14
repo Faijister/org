@@ -9,7 +9,7 @@ Using the SSH protocol, you can connect and authenticate to remote servers and s
   #+begin_src sh options
   ssh-keygen -t rsa -b 4096 -C "xlfu1989@gmail.com"
   #+end_src sh
-- Add SSH key to the ssh-agent
+- Add SSH key to the ssh-agent [Optional]
   #+begin_src sh options
   eval "$(ssh-agent -s)" # If use bash
   eval "(ssh-agent -c)" # If use fish
