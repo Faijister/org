@@ -108,8 +108,19 @@ Solairs supports 4 different groups of IPC.
 - Advanced Solaris IPC
   Solaris Doors
 **** Signals
+UNIX systems provide a process signaling mechanism from the earliest, a method of interrupting a process or thread as a result of a specific event.
+- Synchronous signals
+  Orignate as hardware trap conditions arising from illegal address references (segment fault), illegal math operations and so on.
+- Asynchronous signals
+  Result from an external event for example sending a kill signal (9) to terminate a process.
+A process can handle the process in 3 ways:
+- ignore (masking) → will not handle it
+- caught → handle it using process-defined way
+- default → delegate to OS to handle it using pre-defined way
 **** Memory Management
+Every object in the system is managed as a memory object in some form.
 **** Files and File Systems
+**** Resource Management
 * Part Two: The Process Model
 ** Chapter 2 - The Solaris Process Model
 ** Chapter 3 - Scheduling Classes and the Dispatcher
