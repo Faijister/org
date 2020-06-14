@@ -98,7 +98,16 @@ This chapter summarize key features of Solaris and take a overview of the major 
   - RT (Real Time Scheduling Class) [100-160]
   - Interrupts [160-169]
 **** Interprocess Communication
-
+Solairs supports 4 different groups of IPC.
+- Traditional (Classic) UNIX IPC
+  pipes, named pipes and UNIX domain sockets
+- System V IPC
+  Shared Memory, Message Queue, Semaphores
+- POSIX IPC
+  Similar to System V in functionality, but are very different in their implementation. \\
+  Based on =memory map files=
+- Advanced Solaris IPC
+  Solaris Doors
 **** Signals
 **** Memory Management
 **** Files and File Systems
