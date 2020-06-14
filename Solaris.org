@@ -86,7 +86,17 @@ This chapter summarize key features of Solaris and take a overview of the major 
   - Improved performance, scalability and reliability
   - Reliable signal behavior
   - Improved adaptive mutex lock implementation
-  - User-level sleep queues for asynchronization objects
+  - User-level sleep queues for asynchronization objects\\
+  global process priorities and scheduling\\
+  The Solaris kernel implements a global =thread priority model= for kernel threads.\\
+  The kernel scheduler, or =dispatcher= use the model to decide which kernel thread execute next.\\ Total 170 global priorities, and 7 scheduling classes, higher value means higher priority.
+  - TS (Time Share Scheduling Class) [DEFAULT] priority change dynamically [0-59]
+  - IA (Enhanced TS, Interactive Scheduling Class, GUI) current focus window has higher priority [0-59]
+  - FSS (Fair Share Scheduling Class) not priority-based
+  - FX (Fixed Priority Scheduling Class) priority not change [0-59]
+  - SYS (System Scheduling Class) [60-99]
+  - RT (Real Time Scheduling Class) [100-160]
+  - Interrupts [160-169]
 **** Interprocess Communication
 **** Signals
 **** Memory Management
