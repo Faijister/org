@@ -115,6 +115,11 @@ https://github.com/bbatsov/zenburn-emacs
 M-x package-install RET zenburn-theme
 M-x load-theme zenburn
 #+end_src
+** Mastering Emacs
+*** Emacs tutorial
+#+begin_src emacs-lisp
+M-X help-with-tutorial
+#+end_src
 * Youdao dictionary
 https://github.com/xuchunyang/youdao-dictionary.el
 - function
