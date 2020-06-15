@@ -120,10 +120,16 @@ M-x load-theme zenburn
 #+begin_src emacs-lisp
 M-X help-with-tutorial
 #+end_src
+*** Visual Guide by Sacha Chua
+https://sachachua.com/blog/
 * Youdao dictionary
 https://github.com/xuchunyang/youdao-dictionary.el
 - function
   =youdao-dictionary-search-at-point=
+- add below line in =.doom.d/package.el= to auto load when start
+  #+begin_src emacs-lisp
+  (package! youdao-dictionary)
+  #+end_src
 * Issue - Chinese Fonts half show
 [[./images/Chinese-Fonts-Width.PNG]]
 
@@ -133,7 +139,7 @@ https://github.com/xuchunyang/youdao-dictionary.el
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
                     charset (font-spec :family "Microsoft Yahei")))
-;; need do doom/reload
+;; need do doom/reload - https://github.com/hlissner/doom-emacs/issues/3298
 #+end_src
 [[./images/Chinese-Fonts-Width2.PNG]]
 * Issue - Doom Emacs reload warning
