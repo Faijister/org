@@ -147,3 +147,5 @@ When execute =M-x doom/reload=, report =Can't regenerate envvar file from within
 [[./images/doom-reload-issue.PNG]]
 [[./images/doom-env-file.PNG]]
 Solution: remove the =~/.emacs.d/.local/env= file
+* Issue - Doom Emacs report find error when [SPC]-f-p
+[[./images/SPC-f-p-error.PNG]]
