@@ -149,3 +149,11 @@ When execute =M-x doom/reload=, report =Can't regenerate envvar file from within
 Solution: remove the =~/.emacs.d/.local/env= file
 * Issue - Doom Emacs report find error when [SPC]-f-p
 [[./images/SPC-f-p-error.PNG]]
+#+begin_src sh
+PS H:\> which find
+/c/WINDOWS/system32/find
+#+end_src
+Solution: add below line in =~/.doom.d/config.el=, error solved, but slow
+#+begin_src emacs-lisp
+(setq find-program "C:\\msys64\\usr\\bin\\find.exe")
+#+end_src
