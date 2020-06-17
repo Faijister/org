@@ -28,7 +28,8 @@
   #+begin_src sh
   pacman -S ripgrep clang tar fd
   #+end_src
-
+* Install Doom Emacs on Windows
+https://earvingad.github.io/posts/doom_emacs_windows/
 * China mirror
 Add below lines in file: .doom.d/config.el
 
