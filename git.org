@@ -22,3 +22,7 @@ Using the SSH protocol, you can connect and authenticate to remote servers and s
   git remote get-url --all origin
   git remote set-url origin git@github.com:FannyXL/org.git
   #+end_src sh
+* Git via socks5 proxy
+#+begin_src sh
+git config --global http.proxy 'socks5://127.0.0.1:1080'
+#+end_src
