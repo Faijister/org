@@ -153,7 +153,11 @@ Solution: remove the =~/.emacs.d/.local/env= file
 PS H:\> which find
 /c/WINDOWS/system32/find
 #+end_src
-Solution: add below line in =~/.doom.d/config.el=, error solved, but slow
+Solution: add below line in =~/.doom.d/config.el=, error solved, but feel =very slow=
 #+begin_src emacs-lisp
 (setq find-program "C:\\msys64\\usr\\bin\\find.exe")
 #+end_src
+
+Better Solution is to install rg and fd (windows gnu version)
+ - https://github.com/sharkdp/fd
+ - https://github.com/BurntSushi/ripgrep
