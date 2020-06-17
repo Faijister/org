@@ -1,0 +1,6 @@
+#+TITLE: Emacs
+* Mode
+** Minor mode
+*** blink-cursor-mode
+**** default enabled, blink =blink-cursor-blinks= (10) times
+**** toggle, M-x blink-cursor-mode
