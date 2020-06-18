@@ -1,5 +1,7 @@
 #+TITLE: Emacs
-* Mode
+* Mode =describe-mode=
+** Major mode
+*** Org mode
 ** Minor mode
 *** blink-cursor-mode
 **** default enabled, blink =blink-cursor-blinks= (10) times
@@ -7,6 +9,13 @@
 * Mode Line
 ** toggle → =M-x hide-mode-line-mode=
 ** var → =mode-line-format=
+* Frame
+** FullScreen → =toggle-frame-fullscreen=
+* Window
+** Shrink-window-horizontally =C-x {=
+* Buffer
+** list-buffers → =C-x C-b=
+** switch-to-buffer → =C-x b=
 * Numberic argument =C-u num Command=
 ** Shrink-window-horizontally 7 times =C-u 7 C-x {=
 * Undo
