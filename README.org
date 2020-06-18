@@ -7,6 +7,7 @@ This repo is aim to record some daily knowledge using Emacs Org mode.\\
 Below are the list
 - [[file:git.org][git]]
 - [[file:archlinux.org][arch linux]]
+- [[file:emacs.org][emacs]]
 - [[file:doom-emacs.org][doom emacs]]
 - [[file:network.org][network]]
 - [[file:Windows.org][Windows]]
