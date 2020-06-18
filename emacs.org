@@ -19,6 +19,8 @@
 * Buffer
 ** list-buffers → =C-x C-b=
 ** switch-to-buffer → =C-x b=
+* Variable =describe-variable= =C-h v=
+** =visible-bell=: defult =nil=, suggested =t=
 * Numberic argument =C-u num Command=
 ** Shrink-window-horizontally 7 times =C-u 7 C-x {=
 * Undo
