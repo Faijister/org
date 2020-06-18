@@ -3,4 +3,20 @@
 ** Minor mode
 *** blink-cursor-mode
 **** default enabled, blink =blink-cursor-blinks= (10) times
-**** toggle, M-x blink-cursor-mode
+**** toggle → =M-x blink-cursor-mode=
+* Mode Line
+** toggle → =M-x hide-mode-line-mode=
+** var → =mode-line-format=
+* Numberic argument =C-u num Command=
+** Shrink-window-horizontally 7 times =C-u 7 C-x {=
+* Undo
+** Basic
+*** undo → undoes the most recent change in the buffer
+**** =C-/=
+**** =C-_=
+**** =C-x u=
+* Unicode =C-x 8 RET=
+** Org mode escape → 200B
+** Rightward Arrow → 2192
+* Fringes
+** =set-fringe-style=
