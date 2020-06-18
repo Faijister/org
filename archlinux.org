@@ -208,9 +208,17 @@ rm SwitchyOmega_Chromium.crx
   [[./images/pacman-eating-candy.PNG]]
 * Pinyin Input
 ref[https://wiki.archlinux.org/index.php/fcitx]
+- add archcn repo
+  #+begin_src sh
+  # add below lines in /etc/pacman.conf
+  [archlinuxcn]
+  Server = https://repo.archlinuxcn.org/$arch
+  #+end_src
+- =pacman -Sy=
+- =pacman -S archlinuxcn-keyring=
 - install =fcitx=
   #+begin_src sh
-  pacman -S fcitx fcitx-im fcitx-gtk2 fcitx-gtk3 fcitx-qt5 fcitx-qt4 libidn fcitx-sogoupinyin
+  sudo pacman -S fcitx-im fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 libidn fcitx-sogoupinyin fcitx-googlepinyin
   # add below lines in .xinitrc before exec i3
   # Chinese Input
   export GTK_IM_MODULE=fcitx
