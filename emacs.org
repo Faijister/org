@@ -6,6 +6,9 @@
 *** blink-cursor-mode
 **** default enabled, blink =blink-cursor-blinks= (10) times
 **** toggle → =M-x blink-cursor-mode=
+*** linum-mode          [Left Margin]
+*** line-number-mode    [Mode Line]
+*** column-number mode  [Mode Line]
 * Mode Line
 ** toggle → =M-x hide-mode-line-mode=
 ** var → =mode-line-format=
