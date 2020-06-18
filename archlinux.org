@@ -219,11 +219,17 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
 - install =fcitx=
   #+begin_src sh
   sudo pacman -S fcitx-im fcitx-configtool fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 libidn fcitx-sogoupinyin fcitx-googlepinyin
-  # add below lines in .xinitrc before exec i3
+  # add below lines in ~/.xinitrc before exec i3
   # Chinese Input
   export GTK_IM_MODULE=fcitx
   export QT_IM_MODULE=fcitx
   export XMODIFIERS="@im=fcitx"
+  exec fcitx &
+  # add below lines in ~/.xprofile
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS="@im=fcitx"
+  # add below lines in ~/.config/i3/config
   exec fcitx &
   #+end_src
 - config =fcitx-configtool=
