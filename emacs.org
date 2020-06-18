@@ -1,4 +1,12 @@
 #+TITLE: Emacs
+* Installation
+** Ubuntu 18.04
+#+begin_src sh
+sudo add-apt-repository ppa:kelleyk/emacs
+[ENTER]
+sudo apt-get update
+sudo apt-get install emacs26
+#+end_src
 * Mode =describe-mode=
 ** Major mode
 *** Org mode
