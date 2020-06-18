@@ -34,3 +34,7 @@
 ** Rightward Arrow → 2192
 * Fringes
 ** =set-fringe-style=
+* Misc
+** People
+*** Sacha Chua  [https://sachachua.com/blog/]
+*** Xah Lee     [http://xahlee.org/]
