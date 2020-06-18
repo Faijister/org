@@ -13,6 +13,7 @@
   #+end_src
 - Install Doom Emacs
   #+begin_src sh
+  git config --global http.proxy 'socks5://127.0.0.1:1080' # this helps!!!
   cd ~/.emacs.d/bin
   ./doom -d install  # MAY NEED A BOTTLE OF BEER
   #+end_src
