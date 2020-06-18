@@ -23,6 +23,10 @@
 ** =visible-bell=: defult =nil=, suggested =t=
 * Numberic argument =C-u num Command=
 ** Shrink-window-horizontally 7 times =C-u 7 C-x {=
+* Input method
+** =set-input-method= =C-x RET C-\=
+*** chinese-py
+** toggle-input-method =C-\=
 * Undo
 ** Basic
 *** undo → undoes the most recent change in the buffer
