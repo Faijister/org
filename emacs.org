@@ -8,6 +8,7 @@ sudo apt-get update
 sudo apt-get install emacs26
 # if previously old emacs25 installed, do below
 sudo update-alternatives --set emacs /usr/bin/emacs26
+emacs --version
 #+end_src
 * Mode =describe-mode=
 ** Major mode
