@@ -49,6 +49,11 @@ emacs --version
 ** Rightward Arrow → 2192
 * Fringes
 ** =set-fringe-style=
+* Presentation
+** Org mode - Beamer
+** Org mode - epresent [https://github.com/eschulte/epresent]
+* Mobile Org
+** Dropbox
 * Misc
 ** People
 *** Sacha Chua  [https://sachachua.com/blog/]
