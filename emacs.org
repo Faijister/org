@@ -58,3 +58,5 @@ emacs --version
 ** People
 *** Sacha Chua  [https://sachachua.com/blog/]
 *** Xah Lee     [http://xahlee.org/]
+** Guide
+*** Emacs 101 新手求生指南 [https://github.com/emacs-tw/emacs-101-beginner-survival-guide]
