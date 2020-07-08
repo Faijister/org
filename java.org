@@ -1,8 +1,9 @@
 #+TITLE: Java Learn
 * Learning Paths
 ** https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html
-* A java class file (bytecode) compiled on Windows Platform is successfully executed on Linux (WSL) without any change - Both Using Java 8
-* A java class file (bytecode) compiled on Linux using Java 11 can not run on Windows by Java 8, error is as below
+* .class file (compile)
+** A java class file (bytecode) compiled on Windows Platform is successfully executed on Linux (WSL) without any change - Both Using Java 8
+** A java class file (bytecode) compiled on Linux using Java 11 can not run on Windows by Java 8, error is as below
 #+begin_src java
 C:\Users\efuuxii\learn\java-learn
 λ java HelloWorldApp
@@ -22,3 +23,5 @@ Exception in thread "main" java.lang.UnsupportedClassVersionError: HelloWorldApp
         at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
         at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
 #+end_src
+* Java SE 8 Doc
+** https://docs.oracle.com/javase/8/docs/index.html
