@@ -1,0 +1,31 @@
+~/.emacs
+-----------------------
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+
+(setq visible-bell t)
+(setq default-cursor-type 'hbar)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background "black" :foreground "grey" :family "Source Code Pro" :foundry "outline" :slant normal :weight normal :height 98 :width normal))))
+ '(fringe ((t (:background "black"))))
+ '(mode-line ((t (:foreground "green" :background "black"))))
+ '(mode-line-highlight ((t nil)))
+ '(mode-line-inactive ((t (:background "black" :foreground "yellow")))))
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(setq recentf-max-saved-items 25)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes nil)
+ '(tool-bar-mode nil))
