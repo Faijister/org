@@ -238,6 +238,6 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
   [[./images/archlinux-emacs-pinyin.PNG]]
 * Dual Monitors Setting
   #+begin_src sh
-  xrandr --output VGA1 --auto
+  xrandr --output VGA1 --mode 1680x1050
   xrandr --output LVDS1 --auto --output VGA1 --left-of LVDS1
   #+end_src
