@@ -245,6 +245,6 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
 * Screen lock - i3lock
   #+begin_src sh
   sudo pacman -Syu i3lock
-  i3lock 
+  i3lock -t -i ~/archwall_dark_toxic.png
   #+end_src
 
