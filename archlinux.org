@@ -238,8 +238,13 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
   [[./images/archlinux-emacs-pinyin.PNG]]
 * Dual Monitors Setting
   #+begin_src sh
+  xrandr --output VGA1
   xrandr --output VGA1 --mode 1680x1050
   xrandr --output LVDS1 --auto --output VGA1 --left-of LVDS1
   #+end_src
 * Screen lock - i3lock
+  #+begin_src sh
+  sudo pacman -Syu i3lock
+  i3lock 
+  #+end_src
 
