@@ -241,3 +241,5 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
   xrandr --output VGA1 --mode 1680x1050
   xrandr --output LVDS1 --auto --output VGA1 --left-of LVDS1
   #+end_src
+* Screen lock - i3lock
+
