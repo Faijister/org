@@ -236,3 +236,8 @@ ref[https://wiki.archlinux.org/index.php/fcitx]
   快捷键：CTRL + SPC
   [[./images/arch-linuxpinyin.PNG]]
   [[./images/archlinux-emacs-pinyin.PNG]]
+* Dual Monitors Setting
+  #+begin_src sh
+  xrandr --output VGA1 --auto
+  xrandr --output LVDS1 --auto --output VGA1 --left-of LVDS1
+  #+end_src
